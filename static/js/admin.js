@@ -51,4 +51,16 @@ var Script = function () {
         }
     });
 
+    // 点击注销
+    $('#logout').click(function () {
+        bootbox.confirm("确定要退出", function () {
+            $.post("/backend/logout", function (data) {
+                if (data.ok == 'true') {
+                    window.location = "/login";
+                }
+            });
+            //  alert("aaa");
+
+        })
+    });
 }();

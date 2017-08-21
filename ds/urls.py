@@ -17,9 +17,19 @@ from django.conf.urls import url
 from django.contrib import admin
 # 导入vmm.vmtest文件
 import vmm.vmtest
-
+import vmm.admin
+import vmm.user
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^test/', vmm.vmtest.hellovm),
     url(r'^listvm/', vmm.vmtest.listvm),
+    # -------------------------------
+    url(r'^login/', vmm.vmtest.login),
+    url(r'^backend\/index', vmm.admin.index),
+    url(r'^backend\/logout', vmm.admin.logout),  # 退出
+    # -------------------------------
+    url(r'^front\/index', vmm.user.index),
+    url(r'^front\/profile', vmm.user.profile),  # 修改个人基本信息
+
+
 ]

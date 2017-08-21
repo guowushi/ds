@@ -12,9 +12,18 @@ import tools.cli as cli
 '''
 定义一个方法，处理用户的HTTP请求，并给出HTTP回复
 '''
-
-
 def index(request):
     tp = loader.get_template("login.html")
+    html = tp.render({"count": 1, "vms": 2})
+    return HttpResponse(html)
+
+
+'''
+定义一个方法，处理用户的HTTP请求，并给出HTTP回复
+'''
+
+
+def profile(request):
+    tp = loader.get_template("front/profile.html")
     html = tp.render({"count": 1, "vms": 2})
     return HttpResponse(html)
