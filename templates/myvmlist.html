@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<ul>
+    {% for vm in vms %}
+        <li>
+            虚拟机名： {{ vm.summary.config.name }}
+
+            内存:{{ vm.resourceConfig.memoryAllocation.limit }}
+        </li>
+
+    {% endfor %}
+
+</ul>
+
+</body>
+</html>
