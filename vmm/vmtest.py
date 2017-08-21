@@ -14,8 +14,21 @@ import tools.cli as cli
 '''
 
 
+def login(request):
+    # return HttpResponse("hello VM!")
+    tp = loader.get_template("login.html")
+    html = tp.render({"count": 1, "vms": 2})
+    return HttpResponse(html)
+'''
+定义一个方法，处理用户的HTTP请求，并给出HTTP回复
+'''
+
+
 def hellovm(request):
-    return HttpResponse("hello VM!")
+    # return HttpResponse("hello VM!")
+    tp = loader.get_template("index.html")
+    html = tp.render({"count": 1, "vms": 2})
+    return HttpResponse(html)
 
 
 '''
