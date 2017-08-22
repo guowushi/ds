@@ -16,15 +16,15 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 # 导入vmm.vmtest文件
-import vmm.vmtest
+import vmm.login
 import vmm.admin
 import vmm.user
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^test/', vmm.vmtest.hellovm),
-    url(r'^listvm/', vmm.vmtest.listvm),
+    url(r'^test/', vmm.login.hellovm),
+    url(r'^listvm/', vmm.login.listvm),
     # -------------------------------
-    url(r'^login/', vmm.vmtest.login),
+    url(r'^login/', vmm.login.login),
     url(r'^backend\/index', vmm.admin.index),
     url(r'^backend\/logout', vmm.admin.logout),  # 退出
     # -------------------------------
