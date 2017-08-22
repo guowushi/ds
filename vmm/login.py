@@ -8,54 +8,58 @@ from pyVim import connect
 from pyVmomi import vmodl
 from pyVmomi import vim
 import tools.cli as cli
-
-'''
-定义一个方法，处理用户的HTTP请求，并给出HTTP回复
-'''
-
-
-def login(request):
-    # return HttpResponse("hello VM!")
-    tp = loader.get_template("login.html")
-    html = tp.render({"count": 1, "vms": 2})
-    return HttpResponse(html)
-'''
-定义一个方法，处理用户的HTTP请求，并给出HTTP回复
-'''
+# 引用模型和表单
+from vmm.models import users
+from vmm.forms import user_login
+import simplejson
 
 
-def hellovm(request):
-    # return HttpResponse("hello VM!")
-    tp = loader.get_template("index.html")
-    html = tp.render({"count": 1, "vms": 2})
-    return HttpResponse(html)
-
-
-'''
-显示所有的虚拟机
-'''
-
-
-def listvm(request):
+# 判断用户名，密码是否正确
+def verify_user_info(id, password):
     try:
-        # 连接vcenter服务器
-        service_instance = connect.SmartConnectNoSSL(host="172.16.3.141",
-                                                     user="administrator@vsphere.local",
-                                                     pwd="Server@2012",
-                                                     port=443)
+        db_info = users.objects.filter(user_id=id)
+        if db_info:
+            db_password = str(db_info.values_list('user_password')[0][0])
+            if db_password == password:
+                return True
+            else:
+                return False  # 密码错误
+        else:
+            return False  # 用户id错误
+    except:
+        return False  # 未知错误
 
-        # 从根目录下查找虚拟机
-        atexit.register(connect.Disconnect, service_instance)
-        content = service_instance.RetrieveContent()
-        container = content.rootFolder  # 从哪查找
-        viewType = [vim.VirtualMachine]  # 查找的对象类型是什么
-        recursive = True  # 是否进行递归查找
-        containerView = content.viewManager.CreateContainerView(container, viewType, recursive)
-        children = containerView.view  # 执行查找
 
-        # 载入模板，传递一个集合给模板，让模板渲染成html返回
-        tp = loader.get_template("myvmlist.html")
-        html = tp.render({"count": len(children), "vms": children})
-        return HttpResponse(html)
-    except vmodl.MethodFault as error:
-        return HttpResponse("Caught vmodl fault : " + error.msg)
+# 登录视图
+def login(request):
+    try:
+        if request.method == 'POST':
+            login_info = user_login(request.POST)
+            result = {'user_pass': False, 'captche': False}
+            if login_info.is_valid():
+                if verify_user_info(str(login_info.cleaned_data['user_id']),
+                                    str(login_info.cleaned_data['user_password'])):
+                    print("验证成功！")
+                    result['user_pass'] = True
+                    result['captche'] = True
+                    # 返回JSON格式的对象
+                    return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
+                else:
+                    print("用户名或密码错误！")
+                    result['captche'] = True
+                    # 返回JSON格式的对象
+                    return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
+            else:
+                print("验证码错误！")
+                return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
+        else:
+            tp = loader.get_template("login.html")
+            html = tp.render({"count": 1, "vms": 2})
+            return HttpResponse(html)
+    except:
+        print("请求url包含错误信息！")
+
+
+# 验证码视图
+def yzhengma():
+    pass

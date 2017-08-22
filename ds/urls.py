@@ -21,8 +21,7 @@ import vmm.admin
 import vmm.user
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^test/', vmm.login.hellovm),
-    url(r'^listvm/', vmm.login.listvm),
+    # url(r'^listvm/', vmm.login.listvm),
     # -------------------------------
     url(r'^login/', vmm.login.login),
     url(r'^backend\/index', vmm.admin.index),
