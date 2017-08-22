@@ -7,7 +7,7 @@ import atexit
 from pyVim import connect
 from pyVmomi import vmodl
 from pyVmomi import vim
-import tools.cli as cli
+import vmm.tools.cli as cli
 
 '''
 定义一个方法，处理用户的HTTP请求，并给出HTTP回复

@@ -13,15 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url,include
 from django.contrib import admin
 # 导入vmm.vmtest文件
 import vmm.login
 import vmm.admin
 import vmm.user
+
+#验证码模块开始#
+from captcha.models import CaptchaStore
+from captcha.helpers import captcha_image_url
+#验证码模块结束#
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^listvm/', vmm.login.listvm),
+    url(r'^captcha/', include('captcha.urls')),  # 这是生成验证码的图片
+    url(r'^refresh/$', vmm.login.captcha_refresh, name='captcha-refresh'),  # 刷新验证码
     # -------------------------------
     url(r'^login/', vmm.login.login),
     url(r'^backend\/index', vmm.admin.index),

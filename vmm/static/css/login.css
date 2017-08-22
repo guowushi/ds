@@ -77,7 +77,8 @@ body {
 }
 
 .captcha {
-	margin: -55px 0 0 110px;
+	margin: -32px 0 0 110px;
+	cursor:pointer;
 }
 
 .dlbu {

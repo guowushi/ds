@@ -1,5 +1,4 @@
 var Script = function () {
-
     jQuery('.sidebar .item.vertical > a').click(function () {
         var ver = jQuery(this).next();
         if (ver.is(":visible")) {
@@ -7,9 +6,12 @@ var Script = function () {
             ver.slideUp(200);
         } else {
             jQuery(this).parent().addClass("open");
+            jQuery(this).parent().addClass("active")
             ver.slideDown(200);
         }
+
     });
+
 
     $(function () {
         function responsiveView() {
@@ -64,3 +66,4 @@ var Script = function () {
         })
     });
 }();
+
