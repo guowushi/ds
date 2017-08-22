@@ -42,6 +42,7 @@ def login(request):
     if request.method == 'POST':
         login_info = user_login(request.POST)
         result = {'user_pass': False, 'captche': False}
+
         if login_info.is_valid():
             if verify_user_info(str(login_info.cleaned_data['user_id']),
                                 str(login_info.cleaned_data['user_password'])):
@@ -56,7 +57,9 @@ def login(request):
                 # 返回JSON格式的对象
                 return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
         else:
+            print(login_info.cleaned_data)
             print("验证码错误！")
+            result['user_pass'] = True
             return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
     else:
         hashkey = CaptchaStore.generate_key()
@@ -64,8 +67,8 @@ def login(request):
         tp = loader.get_template("login.html")
         html = tp.render({"hashkey": hashkey, "imgage_url": imgage_url})
         return HttpResponse(html)
-    # except:
-    #     print("请求url包含错误信息！")
+        # except:
+        #     print("请求url包含错误信息！")
 
 
 # 验证码视图
@@ -79,4 +82,4 @@ def captcha_refresh(request):
         'key': new_key,
         'image_url': captcha_image_url(new_key),
     }
-    return HttpResponse(json.dumps(to_json_response), content_type='application/json')
+    return HttpResponse(simplejson.dumps(to_json_response, ensure_ascii=False), content_type='application/json')
