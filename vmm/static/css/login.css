@@ -1,0 +1,108 @@
+html,body{height: 100%;width: 100%;margin:0;padding:0;}
+* {font-family: 幼圆;}
+body {
+	background: url(../images/loginbg1.jpg);
+	width:100%;
+    height:100%;
+    background-size:100% 100%;
+    position:absolute;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/loginbg1.jpg',sizingMethod='scale');
+}
+#dl {
+	z-index: 1;
+	background: #000;
+	width: 580px;
+	height: 330px;
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -150px 0 0 -290px;
+	opacity: 0.7;
+	border-radius: 9px;
+}
+
+.title {
+	z-index: 100;
+    font-size: 33px;
+/*	color: aqua; */
+	color: white;
+    text-align: center;
+	width: 330px;
+	height: 44px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -155px 0 0 -167px;
+}
+
+.register {
+	z-index: 100;
+	font-size: 18px;
+	background-color: transparent;
+	color: aliceblue;
+	border: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -70px 0 0 135px;
+}
+
+.forget {
+	z-index: 100;
+	background-color: transparent;
+	border: none;
+	font-size: 18px;
+	color: aliceblue;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -16px 0 0 135px;
+}
+
+
+.dlfrom {
+	margin-top: 95px;
+	margin-left: 100px;
+}
+
+.ulable  {
+	font-size: 18px;
+	color: aliceblue;
+	text-align: left;
+}
+
+#id_captcha_1  {
+	width: 110px;
+}
+
+.captcha {
+	margin: -55px 0 0 110px;
+}
+
+.dlbu {
+	padding-right: 170px;
+}
+
+.denglu {
+	margin: 0 0 0 60px;
+}
+
+.cz {
+	margin: 0 0 0 50px;
+}
+
+/*注册模块样式*/
+#zfootr {
+	text-align: center;
+}
+
+#reg_bd {
+	text-align: center;
+	padding-left: 120px;
+}
+
+#zc-dia {
+	width: 560px;
+}
+/*注册模块样式结束*/
