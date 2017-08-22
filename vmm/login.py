@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 # 从django.http命名空间引入一个HttpResponse的类
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import loader, Context
 
 # 验证码模块
@@ -83,3 +83,4 @@ def captcha_refresh(request):
         'image_url': captcha_image_url(new_key),
     }
     return HttpResponse(simplejson.dumps(to_json_response, ensure_ascii=False), content_type='application/json')
+
