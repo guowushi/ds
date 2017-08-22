@@ -32,7 +32,7 @@
         <div class="form-group">
             <label class="col-sm-2 ulable">验证码</label>
             <div class="col-md-6 col-sm-10">
-                <input type="text" id="id_captcha_1" class="form-control"  placeholder="验证码">
+                <input type="text" id="id_captcha_1" class="form-control"  name="captcha_1" placeholder="验证码">
                 <img src="{{ imgage_url }}" class="captcha" alt="captcha">
                 <input id="id_reg_captcha_0" name="captcha_0" type="hidden" value="{{ hashkey }}">{{ form.captcha }}
             </div>
