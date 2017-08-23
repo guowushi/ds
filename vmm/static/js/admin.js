@@ -9,7 +9,6 @@ var Script = function () {
             jQuery(this).parent().addClass("active")
             ver.slideDown(200);
         }
-
     });
 
 

@@ -18,29 +18,29 @@
         <div class="form-group u">
             <label class="col-sm-2 ulable">账号</label>
             <div class="col-md-6 col-sm-10">
-                <input type="text" class="form-control " placeholder="电子邮件/手机号/用户名" name="user_id">
+                <input type="text" class="form-control" data-toggle="usertip" placeholder="电子邮件/手机号/用户名" name="user_id">
             </div>
             <button class="register" type="button" data-toggle="modal" data-target="#reg">注册账号</button>
         </div>
         <div class="form-group">
             <label class="col-sm-2 ulable">密码</label>
             <div class="col-md-6 col-sm-10">
-                <input type="password" class="form-control p" placeholder="密码" name="user_password">
+                <input type="password" id="user_password" data-toggle="passtip" class="form-control" placeholder="密码" name="user_password">
             </div>
             <button type="button" class="forget" data-toggle="modal" data-target="#for">忘记密码</button>
         </div>
         <div class="form-group">
             <label class="col-sm-2 ulable">验证码</label>
             <div class="col-md-6 col-sm-10">
-                <input type="text" id="id_captcha_1" class="form-control"  name="captcha_1" placeholder="验证码">
+                <input type="text" id="id_captcha_1" data-toggle="captip" class="form-control"  name="captcha_1" placeholder="验证码">
                 <img src="{{ imgage_url }}" class="captcha" alt="captcha">
                 <input id="id_reg_captcha_0" name="captcha_0" type="hidden" value="{{ hashkey }}">{{ form.captcha }}
             </div>
         </div>
         <div class="form-group dlbu">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default btn-lg denglu">登录</button>
-                <button type="submit" class="btn btn-default cz btn-lg">重置</button>
+                <button  type="button" class="btn btn-default btn-lg denglu">登录</button>
+                <button type="button" class="btn btn-default cz btn-lg">重置</button>
             </div>
         </div>
     </form>
@@ -125,26 +125,6 @@
     </div>
 </div>
 
-
 </body>
-<script>
-    var verify = document.getElementById("id_captcha_1");
-    verify.setAttribute('placeholder', '验证码');
-    /*刷新验证码*/
-    $(function () {
-        $('.captcha').css({
-            'cursor': 'pointer'
-        });
-        {#    # ajax 刷新#}
-        $('.captcha').click(function () {
-            console.log('click');
-            $.getJSON("/captcha/refresh/",
-                function (result) {
-                    $('.captcha').attr('src', result['image_url']);
-                    $('#id_captcha_0').val(result['key'])
-                });
-        });
-    });
-</script>
-
+<script src="{% static '/js/login.js' %}"></script>
 </html>

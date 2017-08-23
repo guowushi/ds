@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 # 从django.http命名空间引入一个HttpResponse的类
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse,HttpResponseRedirect
 from django.template import loader, Context
 
 # 验证码模块
