@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 # 从django.http命名空间引入一个HttpResponse的类
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader, Context
 
 # 验证码模块
@@ -41,7 +41,7 @@ def login(request):
     # try:
     if request.method == 'POST':
         login_info = user_login(request.POST)
-        result = {'user_pass': False, 'captche': False}
+        result = {'user_pass': False, 'captche': False, "admin":False}
 
         if login_info.is_valid():
             if verify_user_info(str(login_info.cleaned_data['user_id']),
@@ -49,8 +49,20 @@ def login(request):
                 print("验证成功！")
                 result['user_pass'] = True
                 result['captche'] = True
-                # 返回JSON格式的对象
-                return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
+
+                request.session['user_id'] = str(login_info.cleaned_data['user_id'])  # 创建session
+                # 判断用户权限
+                db_info = users.objects.filter(user_id=request.session.get('user_id'))
+                isadmin = db_info.values_list('isadmin')[0][0]     #返回一个布尔类型！
+                if isadmin:
+                    result['admin'] = True
+                    # 返回JSON格式的对象
+                    # return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
+                    return HttpResponseRedirect('/backend/list/')
+                else:
+                    # 返回JSON格式的对象
+                    # return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
+                    return HttpResponseRedirect('/front/list/')
             else:
                 print("用户名或密码错误！")
                 result['captche'] = True

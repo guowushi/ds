@@ -33,6 +33,7 @@ urlpatterns = [
     # -------------------------------
     url(r'^login/', vmm.login.login),
     url(r'^backend\/index', vmm.admin.index),
+    url(r'^backend\/list', vmm.admin.listvm),
     url(r'^backend\/logout', vmm.admin.logout),  # 退出
     # -------------------------------
     url(r'^front\/index', vmm.user.index),
