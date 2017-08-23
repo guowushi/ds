@@ -13,17 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 from django.contrib import admin
 # 导入vmm.vmtest文件
 import vmm.login
 import vmm.admin
 import vmm.user
 
-#验证码模块开始#
+# 验证码模块开始#
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
-#验证码模块结束#
+
+# 验证码模块结束#
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -37,7 +38,7 @@ urlpatterns = [
     url(r'^backend\/logout', vmm.admin.logout),  # 退出
     # -------------------------------
     url(r'^front\/index', vmm.user.index),
+    url(r'^front\/list', vmm.user.listvm),
     url(r'^front\/profile', vmm.user.profile),  # 修改个人基本信息
-
 
 ]

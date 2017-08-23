@@ -27,3 +27,9 @@ def profile(request):
     tp = loader.get_template("front/profile.html")
     html = tp.render({"count": 1, "vms": 2})
     return HttpResponse(html)
+
+
+def listvm(request):
+    tp = loader.get_template("front/list.html")
+    html = tp.render({"count": 1, "vms": 2})
+    return HttpResponse(html)
