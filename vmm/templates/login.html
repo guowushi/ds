@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{% static '/css/login.css' %}"/>
     <link type="text/css" rel="stylesheet" href="{% static '/zui/css/zui.css' %}"/>
     <script src="{% static '/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static '/jquery.form.js' %}"></script>
     <script src="{% static '/zui/js/zui.js' %}"></script>
     <script src="{% static '/zui/lib/bootbox/bootbox.min.js' %}"></script>
     <title>登录云管理平台</title>
@@ -35,7 +36,7 @@
             <div class="col-md-6 col-sm-10">
                 <input type="text" id="id_captcha_1" data-toggle="captip" class="form-control"  name="captcha_1" placeholder="验证码">
                 <img src="{{ imgage_url }}" class="captcha" alt="captcha">
-                <input id="id_reg_captcha_0" name="captcha_0" type="hidden" value="{{ hashkey }}">{{ form.captcha }}
+                <input id="id_captcha_0" name="captcha_0" type="hidden" value="{{ hashkey }}">{{ form.captcha }}
             </div>
         </div>
         <div class="form-group dlbu">
