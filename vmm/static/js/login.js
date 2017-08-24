@@ -17,7 +17,7 @@ var userok = false;
 var passok = false;
 var captchaok = false;
 $('.denglu').click(function () {
-    // 验证用户名
+    // 验证用户名密码和验证码是否为空！
     if ($('input[name="user_id"]').val() != "") {
         userok = true;
         if ($('input[name="user_password"]').val() != "") {
@@ -58,12 +58,39 @@ $('.denglu').click(function () {
         $('input[name="user_id"]').tooltip('show');
     }
 
-
-
     //提交按钮,所有验证通过方可提交
     if (userok && passok && captchaok) {
-        $('.dlfrom').submit();
+        // console.log(form);
+        $(".dlfrom").ajaxSubmit({
+            type: "POST",
+            dataType: "json", //json格式，后台返回的数据为json格式的。
+            success: function (result) {
+                console.log(result);
+                if (result.captcha == true) {
+                    if (result.user_pass == false) {
+                        new $.zui.Messager('用户名或密码错误。', {
+                            type: 'warning',
+                            icon: 'warning-sign',
+                            time: '3000',
+                            placement: 'center' // 定义显示位置
+                        }).show();
+                    }else if(result.admin == true){
+                        window.location = "/backend/index";
+                    }else{
+                        window.location = "/front/index";
+                    }
+                } else {
+                    new $.zui.Messager('验证码错误。', {
+                        type: 'warning',
+                        icon: 'warning-sign',
+                        time: '3000',
+                        placement: 'center' // 定义显示位置
+                    }).show();
+                }
+            }
+        });
     }
+
 });
     $('input[name="user_id"]').click(function () {
         $(this).parent('.col-md-6').removeClass('has-warning');
