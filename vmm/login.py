@@ -41,15 +41,14 @@ def login(request):
     # try:
     if request.method == 'POST':
         login_info = user_login(request.POST)
-        result = {'user_pass': False, 'captche': False, "admin":False}
+        result = {'user_pass': False, 'captcha': False, 'isadmin': False}
 
         if login_info.is_valid():
             if verify_user_info(str(login_info.cleaned_data['user_id']),
                                 str(login_info.cleaned_data['user_password'])):
                 print("验证成功！")
                 result['user_pass'] = True
-                result['captche'] = True
-
+                result['captcha'] = True
                 request.session['user_id'] = str(login_info.cleaned_data['user_id'])  # 创建session
                 # 判断用户权限
                 db_info = users.objects.filter(user_id=request.session.get('user_id'))
@@ -57,21 +56,20 @@ def login(request):
                 if isadmin:
                     result['admin'] = True
                     # 返回JSON格式的对象
-                    # return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
-                    return HttpResponseRedirect('/backend/index/')
+                    return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
+                    # return HttpResponseRedirect('/backend/index/')
                 else:
                     # 返回JSON格式的对象
-                    # return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
-                    return HttpResponseRedirect('/front/index/')
+                    return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
+                    # return HttpResponseRedirect('/front/index/')
             else:
                 print("用户名或密码错误！")
-                result['captche'] = True
+                result['captcha'] = True
                 # 返回JSON格式的对象
                 return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
         else:
             print(login_info.cleaned_data)
             print("验证码错误！")
-            result['user_pass'] = True
             return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
     else:
         hashkey = CaptchaStore.generate_key()
@@ -88,7 +86,7 @@ def login(request):
 def logout(request):
     try:
         del request.session['member_id']
-        return HttpResponseRedirect('/login')  # 跳转到index界面
+        return HttpResponseRedirect('/index')  # 跳转到index界面
     except KeyError:
         pass
     data = {"ok": "true"}
