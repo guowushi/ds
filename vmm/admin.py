@@ -26,18 +26,8 @@ def index(request):
     return HttpResponse(html)
 
 
-'''
-定义一个方法，处理用户退出登录！
-'''
-def logout(request):
-    try:
-        del request.session['member_id']
-        return HttpResponseRedirect('/login')  # 跳转到index界面
-    except KeyError:
-        pass
-    data = {"ok": "true"}
-    # 返回JSON格式的对象
-    return HttpResponse(simplejson.dumps(data, ensure_ascii=False), content_type="application/json")
+
+
 
 
 def listvm(request):
@@ -56,11 +46,11 @@ def listvm(request):
             viewType = [vim.VirtualMachine]  # 查找的对象类型是什么
             recursive = True  # 是否进行递归查找
             containerView = content.viewManager.CreateContainerView(container, viewType, recursive)
-            children = containerView.view  # 执行查找
+            vms = containerView.view  # 执行查找
 
             # 载入模板，传递一个集合给模板，让模板渲染成html返回
             tp = loader.get_template("backend/list.html")
-            html = tp.render({"count": len(children), "vms": children})
+            html = tp.render({"vms": vms})
             return HttpResponse(html)
         except vmodl.MethodFault as error:
             return HttpResponse("Caught vmodl fault : " + error.msg)

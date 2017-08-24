@@ -21,6 +21,17 @@ vmm 管理系统的模块
  属于vmm模块的静态资源放在vmm\static\下
  属于vmm模块的模板放在vmm\templates\下  backend放管理员相关的，front放普通用户相关的
 
+管理用户视图
+    admin.py
+普通用户视图
+    user.py
+
+通用视图
+    登录视图
+        login.py
+    通用功能视图
+        common.py
+
 
 
 

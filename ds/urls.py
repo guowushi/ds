@@ -31,11 +31,12 @@ urlpatterns = [
     # url(r'^listvm/', vmm.login.listvm),
     url(r'^captcha/', include('captcha.urls')),  # 这是生成验证码的图片
     url(r'^refresh/$', vmm.login.captcha_refresh, name='captcha-refresh'),  # 刷新验证码
-    # -------------------------------
+    url(r'^logout', vmm.login.logout),  # 退出
     url(r'^login/', vmm.login.login),
+    # -------------------------------
     url(r'^backend\/index', vmm.admin.index),
     url(r'^backend\/list', vmm.admin.listvm),
-    url(r'^backend\/logout', vmm.admin.logout),  # 退出
+    # url(r'^backend\/user', vmm.admin.manageuser),
     # -------------------------------
     url(r'^front\/index', vmm.user.index),
     url(r'^front\/list', vmm.user.listvm),

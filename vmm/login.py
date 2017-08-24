@@ -82,6 +82,23 @@ def login(request):
         # except:
         #     print("请求url包含错误信息！")
 
+'''
+定义一个方法，处理用户退出登录！
+'''
+def logout(request):
+    try:
+        del request.session['member_id']
+        return HttpResponseRedirect('/login')  # 跳转到index界面
+    except KeyError:
+        pass
+    data = {"ok": "true"}
+    # 返回JSON格式的对象
+    return HttpResponse(simplejson.dumps(data, ensure_ascii=False), content_type="application/json")
+
+
+
+
+
 
 # 验证码视图
 def captcha_refresh(request):
