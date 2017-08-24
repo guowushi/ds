@@ -58,11 +58,11 @@ def login(request):
                     result['admin'] = True
                     # 返回JSON格式的对象
                     # return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
-                    return HttpResponseRedirect('/backend/list/')
+                    return HttpResponseRedirect('/backend/index/')
                 else:
                     # 返回JSON格式的对象
                     # return HttpResponse(simplejson.dumps(result, ensure_ascii=False), content_type="application/json")
-                    return HttpResponseRedirect('/front/list/')
+                    return HttpResponseRedirect('/front/index/')
             else:
                 print("用户名或密码错误！")
                 result['captche'] = True

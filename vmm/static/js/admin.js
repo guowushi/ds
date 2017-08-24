@@ -1,16 +1,15 @@
-var Script = function () {
-    jQuery('.sidebar .item.vertical > a').click(function () {
+$(document).ready(function(){
+    $('.sidebar .item.vertical > a').click(function () {
         var ver = jQuery(this).next();
         if (ver.is(":visible")) {
             jQuery(this).parent().removeClass("open");
             ver.slideUp(200);
         } else {
             jQuery(this).parent().addClass("open");
-            jQuery(this).parent().addClass("active")
+            jQuery(this).parent().addClass("active");
             ver.slideDown(200);
         }
     });
-
 
     $(function () {
         function responsiveView() {
@@ -60,9 +59,32 @@ var Script = function () {
                     window.location = "/login";
                 }
             });
-            //  alert("aaa");
-
         })
     });
-}();
+
+    //切换页面的函数
+    function shiftpage(page) {
+        if(page == 'index'){
+            $('.panel').load('/backend/index #ts');
+        }else if(page == 'list'){
+            $('.panel').load('/backend/list #ts');
+        }else if(page == 'apply'){
+            $('.panel').load('/backend/list #ts');
+        }else if(page == 'user'){
+            $('.panel').load('/backend/list #ts');
+        }else{
+            return false;
+        }
+    }
+
+    $('#ad_main').click(function () {
+        shiftpage('index');
+    });
+
+    $('#ad_vm').click(function () {
+        shiftpage('list');
+    })
+
+});
+
 

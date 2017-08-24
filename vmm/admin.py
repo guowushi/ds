@@ -59,12 +59,12 @@ def listvm(request):
             children = containerView.view  # 执行查找
 
             # 载入模板，传递一个集合给模板，让模板渲染成html返回
-            tp = loader.get_template("myvmlist.html")
+            tp = loader.get_template("backend/list.html")
             html = tp.render({"count": len(children), "vms": children})
             return HttpResponse(html)
         except vmodl.MethodFault as error:
             return HttpResponse("Caught vmodl fault : " + error.msg)
     else:
-        tp = loader.get_template("404.html")
+        tp = loader.get_template("backend/list.html")
         html = tp.render()
         return HttpResponse("页面未找到！")
