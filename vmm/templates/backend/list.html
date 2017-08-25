@@ -2,19 +2,25 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    {% load staticfiles %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>z-admin</title>
     <link rel="stylesheet" type="text/css" href="/static/zui/css/zui.css">
     <link rel="stylesheet" type="text/css" href="/static/zui/css/theme/zui-theme-green.css">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/zui/lib/bootbox/bootbox.css">
+    <link rel="stylesheet" type="text/css" href="/static/zui/lib/datatable/zui.datatable.min.css">
     <script type="text/javascript" src="/static/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/static/zui/js/zui.js"></script>
+    <script type="text/javascript" src="/static/zui/lib/bootbox/bootbox.js"></script>
+    <script type="text/javascript" src="/static/zui/lib/datatable/zui.datatable.min.js"></script>
+    <script src="{% static '/js/admin.js' %}"></script>
 </head>
 <body>
-<div id="ts">
+<div id="listvmm">
     <div class="panel-heading"><h5>虚拟机管理</h5></div>
-<div id="sasa" class="panel-body">
-    <table class="table table-bordered table-hover table-striped">
+<div class="panel-body">
+    <table class="table datatable table-bordered table-hover table-striped">
         <thead>
         <tr>
             <th width="40" class="text-center"><input type="checkbox" name="checkbox"></th>
@@ -53,25 +59,12 @@
                             <td class="text-center">2016-06-05 16:20</td>
                             <td class="text-center">
                                 {% if vm.summary.runtime.powerState|length > 9 %}
-                                    <button type="button" class="btn btn-sm btn-success"><i class="icon-play"></i>
-                                        打开
-                                    </button>
-                                    {#                                        <input class="btn btn-primary btn-sm" type="button"#}
-                                    {#                                               value="打开" onclick="openvm('{{ vm.summary.config.instanceUuid }}')">#}
+                                    <button type="button" id="poweron" class="btn btn-sm btn-success "><i class="icon-play"></i>打开</button>
                                 {% else %}
-                                    <button type="button" class="btn btn-sm btn-danger"><i class="icon-off"></i>
-                                        关机
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger"><i class="icon-refresh"></i>
-                                        重启
-                                    </button>
-                                    {#                                        <input type="button" class="btn btn-primary btn-sm"#}
-                                    {#                                               onclick="shutvm('{{ vm.summary.config.instanceUuid }}',this)" value="关闭"#}
-                                    {#                                               onclick="openvm('{{ vm.summary.config.instanceUuid }}')"/>#}
-                                    {#                                        <input type="button" class="btn btn-primary btn-sm"#}
-                                    {#                                               onclick="rebootvm('{{ vm.summary.config.instanceUuid }}')" value="重启"#}
-                                    {#                                               onclick="openvm('{{ vm.summary.config.instanceUuid }}')"/>#}
+                                    <button type="button" id="poweroff" class="btn btn-sm btn-danger"><i class="icon-off"></i>关机</button>
+                                    <button type="button" id="powerre" class="btn btn-sm btn-danger"><i class="icon-refresh"></i>重启</button>
                                 {% endif %}
+                            <input class="uuid" type="hidden" value="{{ vm.summary.config.instanceUuid }}">
                             </td>
                         </tr>
                     {% endif %}
@@ -96,7 +89,5 @@
 </div>
 </div>
 
-
-<script type="text/javascript" src="/vmm/static/js/admin.js"></script>
 </body>
 </html>
