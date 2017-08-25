@@ -63,7 +63,7 @@ def listvm(request):
                 vms_include.append(vms_obj)
             # 载入模板，传递一个集合给模板，让模板渲染成html返回
             tp = loader.get_template("backend/list.html")
-            html = tp.render({"vms": vms})
+            html = tp.render({"vms": vms_include})
             return HttpResponse(html)
         except vmodl.MethodFault as error:
             return HttpResponse("Caught vmodl fault : " + error.msg)

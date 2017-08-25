@@ -8,17 +8,12 @@
     <link rel="stylesheet" type="text/css" href="/static/zui/css/zui.css">
     <link rel="stylesheet" type="text/css" href="/static/zui/css/theme/zui-theme-green.css">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/static/zui/lib/bootbox/bootbox.css">
-    <link rel="stylesheet" type="text/css" href="/static/zui/lib/datatable/zui.datatable.min.css">
     <script type="text/javascript" src="/static/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/static/zui/js/zui.js"></script>
     <script src="{% static '/js/admin.js' %}"></script>
-    <script type="text/javascript" src="/static/zui/lib/bootbox/bootbox.js"></script>
-    <script type="text/javascript" src="/static/zui/lib/datatable/zui.datatable.min.js"></script>
-    <script src="{% static '/js/admin.js' %}"></script>
 </head>
 <body>
-<div id="ts">
+<div id="listvmm">
     <div class="panel-heading"><h5>虚拟机管理</h5></div>
 <div id="sasa" class="panel-body">
     <table class="table table-bordered table-hover table-striped">
@@ -28,10 +23,11 @@
             <th width="50" class="text-center">系统</th>
             <th>主机</th>
             <th width="200" class="text-center">IP地址</th>
-            <th width="100" class="text-center">状态</th>
+
             <th width="140" class="text-center">CPU/MHz</th>
             <th width="140" class="text-center">内存/MB</th>
             <th width="150" class="text-center">使用人</th>
+            <th width="100" class="text-center">状态</th>
             <th width="140" class="text-center">操作</th>
         </tr>
         </thead>
@@ -49,51 +45,55 @@
                             </td>
                             <td>{{ vm.vm_ob.summary.config.name }}</td>
                             <td class="text-center">{{ vm.vm_ob.summary.guest.ipAddress }}</td>
-                            <td class="text-center">
+
+                        <td class="text-center">{{ vm.vm_ob.summary.quickStats.overallCpuUsage }}/{{ vm.vm_ob.summary.runtime.maxCpuUsage }}</td>
+                        <td class="text-center">{{ vm.vm_ob.summary.quickStats.guestMemoryUsage }}/{{ vm.vm_ob.summary.runtime.maxMemoryUsage }}</td>
+                        <td class="text-center">{{ vm.user }}</td>
+                        <td class="text-center">
                                 <div class="btn-group">
+                                    {% if vm.enabled == 0 %}
                                     <button type="button" class="btn btn-xs btn-primary">启用</button>
+                                    {% else %}
                                     <button type="button" class="btn btn-xs">禁用</button>
-                                </div>
-                            </td>
-                            <td class="text-center">{{ vm.vm_ob.summary.quickStats.overallCpuUsage }}/{{ vm.vm_ob.summary.runtime.maxCpuUsage }}</td>
-                            <td class="text-center">{{ vm.vm_ob.summary.quickStats.guestMemoryUsage }}/{{ vm.vm_ob.summary.runtime.maxMemoryUsage }}</td>
-                            <td class="text-center">{{ vm.user }}</td>
-                            <td class="text-center">
-                                {% if vm.vm_ob.summary.runtime.powerState|length > 9 %}
-                                    <button type="button" id="poweron" class="btn btn-sm btn-success"><i class="icon-play"></i>
-                                        打开
-                                    </button>
-                                {% else %}
-                                    <button type="button" class="btn btn-sm btn-danger"><i class="icon-off"></i>
-                                        关机
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger"><i class="icon-refresh"></i>
-                                        重启
-                                    </button>
                                 {% endif %}
-                            <input class="uuid" type="hidden" value="{{ vm.summary.config.instanceUuid }}">
-                            </td>
-                        </tr>
-                    {% endif %}
-        {% endfor %}
-        </tbody>
-        <tfoot>
-        <tr>
-            <th width="40" class="text-center"><input type="checkbox" name="checkbox"></th>
-            <th colspan="8">
-                <button type="button" class="btn btn-danger"><i class="icon-trash"></i> 删除</button>
-                <div class="pull-right">
-                    <ul class="pager">
-                        <li class="previous"><a href="#">«</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li class="next"><a href="#">»</a></li>
-                    </ul>
-                </div>
-            </th>
-        </tr>
-        </tfoot>
-    </table>
-</div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            {% if vm.vm_ob.summary.runtime.powerState|length > 9 %}
+                                <button type="button" id="poweron" class="btn btn-sm btn-success"><i
+                                        class="icon-play"></i>
+                                    打开
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-sm btn-danger"><i class="icon-off"></i>
+                                    关机
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger"><i class="icon-refresh"></i>
+                                    重启
+                                </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <th width="40" class="text-center"><input type="checkbox" name="checkbox"></th>
+                <th colspan="8">
+                    <button type="button" class="btn btn-danger"><i class="icon-trash"></i> 删除</button>
+                    <div class="pull-right">
+                        <ul class="pager">
+                            <li class="previous"><a href="#">«</a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li class="next"><a href="#">»</a></li>
+                        </ul>
+                    </div>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
 </div>
 
 </body>
