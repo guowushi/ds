@@ -41,5 +41,4 @@ urlpatterns = [
     url(r'^front\/index', vmm.user.index),
     url(r'^front\/list', vmm.user.listvm),
     url(r'^front\/profile', vmm.user.profile),  # 修改个人基本信息
-
 ]

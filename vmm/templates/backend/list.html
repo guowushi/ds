@@ -12,15 +12,16 @@
     <link rel="stylesheet" type="text/css" href="/static/zui/lib/datatable/zui.datatable.min.css">
     <script type="text/javascript" src="/static/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/static/zui/js/zui.js"></script>
+    <script src="{% static '/js/admin.js' %}"></script>
     <script type="text/javascript" src="/static/zui/lib/bootbox/bootbox.js"></script>
     <script type="text/javascript" src="/static/zui/lib/datatable/zui.datatable.min.js"></script>
     <script src="{% static '/js/admin.js' %}"></script>
 </head>
 <body>
-<div id="listvmm">
+<div id="ts">
     <div class="panel-heading"><h5>虚拟机管理</h5></div>
-<div class="panel-body">
-    <table class="table datatable table-bordered table-hover table-striped">
+<div id="sasa" class="panel-body">
+    <table class="table table-bordered table-hover table-striped">
         <thead>
         <tr>
             <th width="40" class="text-center"><input type="checkbox" name="checkbox"></th>
@@ -36,33 +37,39 @@
         </thead>
         <tbody>
         {% for vm in vms %}
-                    {% if not vm.config.template %}
+                    {% if not vm.vm_ob.config.template %}
                         <tr>
                             <td class="text-center"><input type="checkbox" name="checkbox"></td>
                             <td class="text-center">
-                                {% if vm.guest.guestFamily == "windowsGuest" %}
+                                {% if vm.vm_ob.guest.guestFamily == "windowsGuest" %}
                                     Windows
-                                {% elif vm.guest.guestFamily == "linuxGuest" %}
+                                {% elif vm.vm_ob.guest.guestFamily == "linuxGuest" %}
                                     Linux
                                 {% endif %}
                             </td>
-                            <td>{{ vm.summary.config.name }}</td>
-                            <td class="text-center">{{ vm.summary.guest.ipAddress }}</td>
+                            <td>{{ vm.vm_ob.summary.config.name }}</td>
+                            <td class="text-center">{{ vm.vm_ob.summary.guest.ipAddress }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-xs btn-primary">启用</button>
                                     <button type="button" class="btn btn-xs">禁用</button>
                                 </div>
                             </td>
-                            <td class="text-center">{{ vm.summary.quickStats.overallCpuUsage }}/{{ vm.summary.runtime.maxCpuUsage }}</td>
-                            <td class="text-center">{{ vm.summary.quickStats.guestMemoryUsage }}/{{ vm.summary.runtime.maxMemoryUsage }}</td>
-                            <td class="text-center">2016-06-05 16:20</td>
+                            <td class="text-center">{{ vm.vm_ob.summary.quickStats.overallCpuUsage }}/{{ vm.vm_ob.summary.runtime.maxCpuUsage }}</td>
+                            <td class="text-center">{{ vm.vm_ob.summary.quickStats.guestMemoryUsage }}/{{ vm.vm_ob.summary.runtime.maxMemoryUsage }}</td>
+                            <td class="text-center">{{ vm.user }}</td>
                             <td class="text-center">
-                                {% if vm.summary.runtime.powerState|length > 9 %}
-                                    <button type="button" id="poweron" class="btn btn-sm btn-success "><i class="icon-play"></i>打开</button>
+                                {% if vm.vm_ob.summary.runtime.powerState|length > 9 %}
+                                    <button type="button" id="poweron" class="btn btn-sm btn-success"><i class="icon-play"></i>
+                                        打开
+                                    </button>
                                 {% else %}
-                                    <button type="button" id="poweroff" class="btn btn-sm btn-danger"><i class="icon-off"></i>关机</button>
-                                    <button type="button" id="powerre" class="btn btn-sm btn-danger"><i class="icon-refresh"></i>重启</button>
+                                    <button type="button" class="btn btn-sm btn-danger"><i class="icon-off"></i>
+                                        关机
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-danger"><i class="icon-refresh"></i>
+                                        重启
+                                    </button>
                                 {% endif %}
                             <input class="uuid" type="hidden" value="{{ vm.summary.config.instanceUuid }}">
                             </td>

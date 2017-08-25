@@ -15,7 +15,7 @@ from pyVmomi import vim
 
 # 引用模型和表单
 from vmm.models import users
-
+from vmm.models import vms
 
 '''
 定义一个方法，处理用户的管理员登录！
@@ -46,8 +46,21 @@ def listvm(request):
             viewType = [vim.VirtualMachine]  # 查找的对象类型是什么
             recursive = True  # 是否进行递归查找
             containerView = content.viewManager.CreateContainerView(container, viewType, recursive)
-            vms = containerView.view  # 执行查找
-
+            vms_list = containerView.view  # 执行查找
+            vm_infor = vms.objects.all() # 获得vms表单信息
+            user_info = users.objects.all() # 获得users表单信息
+            vms_include = []                      # 用于打包虚拟机列表及其使用者
+            for vm_vc in vms_list:
+                vms_obj = vm_obj()
+                vms_obj.vm_ob = vm_vc
+                for vm_sq in vm_infor:
+                    if(vm_vc.summary.config.uuid==vm_sq.vm_uuid):  #遍历数据库找到对应虚拟机使用者
+                        for user in user_info:
+                            if(user.user_id==vm_sq.vm_user_id):
+                                vms_obj.user=user.real_name
+                                vms_obj.enabled=vm_sq.vm_enabled
+                                break
+                vms_include.append(vms_obj)
             # 载入模板，传递一个集合给模板，让模板渲染成html返回
             tp = loader.get_template("backend/list.html")
             html = tp.render({"vms": vms})
@@ -89,3 +102,12 @@ def power(request):
     elif op_type == '-1':#重启
         action.RebootGuest()
     return HttpResponse(simplejson.dumps(data, ensure_ascii=False), content_type="application/json")
+
+
+
+#存放虚拟机对象和使用者禁用状态
+class vm_obj(object):
+    def __int__(self,vm_ob,user,enabled):
+        self.vm_ob=vm_ob
+        self.user=user
+        self.enabled=enabled
