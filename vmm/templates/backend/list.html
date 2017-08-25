@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    {% load staticfiles %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>z-admin</title>
     <link rel="stylesheet" type="text/css" href="/static/zui/css/zui.css">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     <script type="text/javascript" src="/static/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/static/zui/js/zui.js"></script>
+    <script src="{% static '/js/admin.js' %}"></script>
 </head>
 <body>
 <div id="ts">
@@ -30,34 +32,32 @@
         </thead>
         <tbody>
         {% for vm in vms %}
-                    {% if not vm.config.template %}
+                    {% if not vm.vm_ob.config.template %}
                         <tr>
                             <td class="text-center"><input type="checkbox" name="checkbox"></td>
                             <td class="text-center">
-                                {% if vm.guest.guestFamily == "windowsGuest" %}
+                                {% if vm.vm_ob.guest.guestFamily == "windowsGuest" %}
                                     Windows
-                                {% elif vm.guest.guestFamily == "linuxGuest" %}
+                                {% elif vm.vm_ob.guest.guestFamily == "linuxGuest" %}
                                     Linux
                                 {% endif %}
                             </td>
-                            <td>{{ vm.summary.config.name }}</td>
-                            <td class="text-center">{{ vm.summary.guest.ipAddress }}</td>
+                            <td>{{ vm.vm_ob.summary.config.name }}</td>
+                            <td class="text-center">{{ vm.vm_ob.summary.guest.ipAddress }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-xs btn-primary">启用</button>
                                     <button type="button" class="btn btn-xs">禁用</button>
                                 </div>
                             </td>
-                            <td class="text-center">{{ vm.summary.quickStats.overallCpuUsage }}/{{ vm.summary.runtime.maxCpuUsage }}</td>
-                            <td class="text-center">{{ vm.summary.quickStats.guestMemoryUsage }}/{{ vm.summary.runtime.maxMemoryUsage }}</td>
-                            <td class="text-center">2016-06-05 16:20</td>
+                            <td class="text-center">{{ vm.vm_ob.summary.quickStats.overallCpuUsage }}/{{ vm.vm_ob.summary.runtime.maxCpuUsage }}</td>
+                            <td class="text-center">{{ vm.vm_ob.summary.quickStats.guestMemoryUsage }}/{{ vm.vm_ob.summary.runtime.maxMemoryUsage }}</td>
+                            <td class="text-center">{{ vm.user }}</td>
                             <td class="text-center">
-                                {% if vm.summary.runtime.powerState|length > 9 %}
+                                {% if vm.vm_ob.summary.runtime.powerState|length > 9 %}
                                     <button type="button" id="poweron" class="btn btn-sm btn-success"><i class="icon-play"></i>
                                         打开
                                     </button>
-                                    {#                                        <input class="btn btn-primary btn-sm" type="button"#}
-                                    {#                                               value="打开" onclick="openvm('{{ vm.summary.config.instanceUuid }}')">#}
                                 {% else %}
                                     <button type="button" class="btn btn-sm btn-danger"><i class="icon-off"></i>
                                         关机
@@ -65,12 +65,6 @@
                                     <button type="button" class="btn btn-sm btn-danger"><i class="icon-refresh"></i>
                                         重启
                                     </button>
-                                    {#                                        <input type="button" class="btn btn-primary btn-sm"#}
-                                    {#                                               onclick="shutvm('{{ vm.summary.config.instanceUuid }}',this)" value="关闭"#}
-                                    {#                                               onclick="openvm('{{ vm.summary.config.instanceUuid }}')"/>#}
-                                    {#                                        <input type="button" class="btn btn-primary btn-sm"#}
-                                    {#                                               onclick="rebootvm('{{ vm.summary.config.instanceUuid }}')" value="重启"#}
-                                    {#                                               onclick="openvm('{{ vm.summary.config.instanceUuid }}')"/>#}
                                 {% endif %}
                             </td>
                         </tr>
@@ -96,7 +90,5 @@
 </div>
 </div>
 
-
-<script type="text/javascript" src="/vmm/static/js/admin.js"></script>
 </body>
 </html>
