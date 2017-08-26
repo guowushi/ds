@@ -35,12 +35,13 @@ urlpatterns = [
     url(r'^logout', vmm.login.logout),  # 退出
     url(r'^login/', vmm.login.login),
     # -------------------------------
-    url(r'^backend\/index', vmm.admin.index),
-    url(r'^backend\/list', vmm.admin.listvm),
-    url(r'^backend\/power', vmm.admin.power),
-    url(r'^backend\/createvm', vmm.common.createvm),
+    url(r'^backend/index', vmm.admin.index),
+    url(r'^backend/list', vmm.admin.listvm),
+    url(r'^backend/power', vmm.admin.power),
+    url(r'^backend/createvm', vmm.common.createvm),
+    url(r'^backend/profile', vmm.admin.users_infor),
     # -------------------------------
-    url(r'^front\/index', vmm.user.index),
-    url(r'^front\/list', vmm.user.listvm),
-    url(r'^front\/profile', vmm.user.profile),  # 修改个人基本信息
+    url(r'^front/index', vmm.user.index),
+    url(r'^front/list', vmm.user.listvm),
+    url(r'^front/profile', vmm.user.profile),  # 修改个人基本信息
 ]

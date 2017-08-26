@@ -6,6 +6,15 @@
     <script type="text/javascript" src="/static/js/power.js"></script>
     <script type="text/javascript" src="/static/js/common.js"></script>
 {% endblock %}
+
+{% block user_page %}
+    <a href="http://127.0.0.1:8000/front/list" id="ad_vm">
+        <i class="icon icon-bell-alt"></i>
+        <span>虚拟机</span>
+        {#                    <span class="arrow"></span>#}
+    </a>
+{% endblock %}
+
 {% block title %}虚拟机云管理{% endblock %}
 {% block main %}
 <div id="listvmm">

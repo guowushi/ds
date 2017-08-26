@@ -103,7 +103,28 @@ def power(request):
 
 # 存放虚拟机对象和使用者禁用状态
 class vm_obj(object):
-    def __int__(self, vm_ob, user, enabled):
+    def __int__(self, vm_ob, user, enabled, vm_list):
         self.vm_ob = vm_ob
         self.user = user
         self.enabled = enabled
+        self.vm_list = vm_list
+
+
+def users_infor(request):
+    vm_infor = vms.objects.all()  # 获得vms表单信息
+    user_info = users.objects.all()  # 获得users表单信息
+    users_ob = []  # 存放信息列表
+    for user in user_info:
+        user_ob = vm_obj()
+        user_ob.user = user
+        vms_ob = []
+        for vm in vm_infor:
+            if (vm.vm_user_id == user.user_id):
+                vms_ob.append(vm)
+        user_ob.vm_list = vms_ob
+        users_ob.append(user_ob)
+
+    print (users_ob[1].user.real_name)
+    tp = loader.get_template("backend/profile.html")
+    html = tp.render({"users": users_ob})
+    return HttpResponse(html)
