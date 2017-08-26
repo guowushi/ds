@@ -85,8 +85,8 @@ def login(request):
 '''
 def logout(request):
     try:
-        del request.session['member_id']
-        return HttpResponseRedirect('/index')  # 跳转到index界面
+        del request.session['user_id']
+        return HttpResponseRedirect('/login/')  # 跳转到index界面
     except KeyError:
         pass
     data = {"ok": "true"}

@@ -124,7 +124,7 @@ def createvm(request):
         if request.method == 'POST':  # 当提交表单时
             vm_regist_info = vm_regist(request.POST)  # form 包含提交的数据
             if vm_regist_info.is_valid():  # 如果提交的数据合法
-                print("输入数据合法！")
+                print("输入数据合法！ ")
                 print(vm_regist_info.cleaned_data)
             else:
                 print("输入数据不合法！")
