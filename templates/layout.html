@@ -1,28 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{% endblock %}</title>
-    {% load staticfiles %}
+    <title>{% block title %}虚拟机云管理{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="/static/zui/css/zui.css">
     <link rel="stylesheet" type="text/css" href="/static/zui/css/theme/zui-theme-green.css">
-
     <link rel="stylesheet" type="text/css" href="/static/zui/lib/bootbox/bootbox.css">
-    <link rel="stylesheet" type="text/css" href="/static/zui/lib/datatable/zui.datatable.min.css">
-
-    <script type="text/javascript" src="{% static 'jquery-3.2.1.min.js' %}"></script>
+    <script type="text/javascript" src="/static/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/static/jquery.form.js"></script>
     <script type="text/javascript" src="/static/zui/js/zui.js"></script>
     <script type="text/javascript" src="/static/zui/lib/bootbox/bootbox.js"></script>
-    <script type="text/javascript" src="/static/zui/lib/datatable/zui.datatable.min.js"></script>
-    {% block page_css %}
-
-    {% endblock %}
-    {% block page_js %}
-
-    {% endblock %}
-
-
+    {% block page_css %}{% endblock %}
+    {% block page_js %}{% endblock %}
 </head>
 
 <body>
@@ -80,11 +70,14 @@
                     </a>
                 </div>
                 <div class="item">
-                    <a href="#" id="ad_vm">
+                    {% block user_page %}
+                    <a href="http://127.0.0.1:8000/backend/list" id="ad_vm">
+
                         <i class="icon icon-bell-alt"></i>
                         <span>虚拟机</span>
                         {#                    <span class="arrow"></span>#}
                     </a>
+                    {% endblock %}
                     {#                <div class="vertical-menu">#}
                     {#                    <a href="#">分类一</a>#}
                     {#                    <a href="#">分类二</a>#}
@@ -108,7 +101,7 @@
             <ol class="breadcrumb">
                 <li><a href="#"><i class="icon icon-home"></i> 主页</a></li>
             </ol>
-
+            {% block panel %}
             <div class="panel">
                 {% block main %}
                     <div id="listvmm">
@@ -150,7 +143,7 @@
                     </div>
                 {% endblock %}
             </div>
-
+            {% endblock %}
         </div>
     </div>
 </div>

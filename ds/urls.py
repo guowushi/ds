@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^backend\/index', vmm.admin.index),
     url(r'^backend\/list', vmm.admin.listvm),
     url(r'^backend\/power', vmm.admin.power),
+    url(r'^backend\/createvm', vmm.createvm.createvm),
     # -------------------------------
     url(r'^front\/index', vmm.user.index),
     url(r'^front\/list', vmm.user.listvm),

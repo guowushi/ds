@@ -1,21 +1,16 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    {% load staticfiles %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>z-admin</title>
-    <link rel="stylesheet" type="text/css" href="/static/zui/css/zui.css">
-    <link rel="stylesheet" type="text/css" href="/static/zui/css/theme/zui-theme-green.css">
+{% extends "layout.html" %}
+{% block page_css %}
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-    <script type="text/javascript" src="/static/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="/static/zui/js/zui.js"></script>
-    <script src="{% static '/js/admin.js' %}"></script>
-</head>
-<body>
+{% endblock %}
+{% block page_js %}
+    <script type="text/javascript" src="/static/js/power.js"></script>
+    <script type="text/javascript" src="/static/js/common.js"></script>
+{% endblock %}
+{% block title %}虚拟机云管理{% endblock %}
+{% block main %}
 <div id="listvmm">
     <div class="panel-heading"><h5>虚拟机管理</h5></div>
-<div id="sasa" class="panel-body">
+<div class="panel-body">
     <table class="table table-bordered table-hover table-striped">
         <thead>
         <tr>
@@ -32,10 +27,15 @@
         </tr>
         </thead>
         <tbody>
+
+
         {% for vm in vms %}
+
                     {% if not vm.vm_ob.config.template %}
-                        <tr>
-                            <td class="text-center"><input type="checkbox" name="checkbox"></td>
+                        <tr id="r{{ forloop.counter }}">
+                            <td class="text-center">
+                                <input type="checkbox" name="checkbox" value="{{ vm.vm_ob.summary.config.instanceUuid }}">
+                            </td>
                             <td class="text-center">
                                 {% if vm.vm_ob.guest.guestFamily == "windowsGuest" %}
                                     Windows
@@ -58,19 +58,12 @@
                                 {% endif %}
                             </div>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center opt">
                             {% if vm.vm_ob.summary.runtime.powerState|length > 9 %}
-                                <button type="button" id="poweron" class="btn btn-sm btn-success"><i
-                                        class="icon-play"></i>
-                                    打开
-                                </button>
+                                <button type="button" class="btn btn-sm btn-success btn_poweron"><i class="icon-play"></i>打开</button>
                             {% else %}
-                                <button type="button" class="btn btn-sm btn-danger"><i class="icon-off"></i>
-                                    关机
-                                </button>
-                                <button type="button" class="btn btn-sm btn-danger"><i class="icon-refresh"></i>
-                                    重启
-                                </button>
+                                <button type="button" class="btn btn-sm btn-danger btn_poweroff"><i class="icon-off"></i>关机</button>
+                                <button type="button" class="btn btn-sm btn-danger btn_reboot"><i class="icon-refresh"></i>重启</button>
                             {% endif %}
                         </td>
                     </tr>
@@ -95,6 +88,4 @@
         </table>
     </div>
 </div>
-
-</body>
-</html>
+{% endblock %}

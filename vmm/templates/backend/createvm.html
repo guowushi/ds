@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block page_css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/createvm.css">
+{% endblock %}
+{% block title %}创建虚拟机{% endblock %}
+{% block main %}
+<div class="main">
+    <span  class="create_t">虚拟机申请</span>
+    <form class="create_f" method='POST'>
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>虚拟机名字</label>
+            <input type="text" class="form-control" placeholder="虚拟机名字" name="vm_name">
+        </div>
+        <div class="form-group">
+            <label >虚拟机密码</label>
+            <input type="password" class="form-control" placeholder="虚拟机密码" name="vm_password">
+        </div>
+        <div class="form-group">
+            <label>虚拟机系统</label>
+            <select class="form-control"  name="vm_os">
+                    <option value="centos68">Centos 6.8</option>
+                    <option value="centos7">Centos 7</option>
+                    <option value="winxp">Windows Xp</option>
+                    <option value="win7">Windows 7</option>
+                    <option value="win10">Windows 10</option>
+                    <option value="server2008">Windows Server 2008 DataBase</option>
+                    <option value="server2012">Windows Server 2012 DataBase</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label >CPU</label>
+            <select class="form-control"  name="vm_cpu">
+                <option value="1">1核 * 2GHz</option>
+                <option value="2">2核 * 2GHz</option>
+                <option value="4">4核 * 2GHz</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label >内存</label>
+            <select class="form-control"  name="vm_memory">
+                <option value="1">1GB</option>
+                <option value="2">2GB</option>
+                <option value="4">4GB</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label >硬盘</label>
+            <select class="form-control"  name="vm_disk">
+                <option value="20">20GB</option>
+                <option value="40">40GB</option>
+                <option value="60">60GB</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>虚拟机用途</label>
+            <textarea name="vm_purpose" class="form-control" rows="2" placeholder="For Study...">For Study...</textarea>
+        </div>
+      <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+</div>
+{% endblock %}

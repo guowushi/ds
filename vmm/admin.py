@@ -75,8 +75,6 @@ def listvm(request):
 
 
 
-
-
 # 虚拟机电源管理
 def power(request):
     uuid = request.GET.get('uuid')
