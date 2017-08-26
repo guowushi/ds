@@ -1,19 +1,4 @@
-.main {
-    position: fixed;
-    margin-left: 5%;
-}
-
-.create_t {
-    font-size: 25px;
-    position: relative;
-    top: 10px;
-    margin-bottom: 10px;
-    border-left: 3px solid #0098cd;
-    left: 10px;
-    padding-left: 8px;
-}
-
-.create_f {
-    top:9%;
-    position: fixed;
+.app_vm {
+    width: 500px;
+    margin-left: 10px;
 }

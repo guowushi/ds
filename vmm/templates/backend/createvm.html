@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 {% block page_css %}
     <link rel="stylesheet" type="text/css" href="/static/css/createvm.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 {% endblock %}
-{% block title %}创建虚拟机{% endblock %}
+    {% block page_js %}<script type="text/javascript" src="/static/js/common.js"></script>{% endblock %}
 {% block main %}
-<div class="main">
-    <span  class="create_t">虚拟机申请</span>
+<div class="app_vm">
+<div class="panel-heading"><h5>虚拟机申请</h5></div>
     <form class="create_f" method='POST'>
         {% csrf_token %}
-
         <div class="form-group">
             <label>虚拟机名字</label>
             <input type="text" class="form-control" placeholder="虚拟机名字" name="vm_name">
