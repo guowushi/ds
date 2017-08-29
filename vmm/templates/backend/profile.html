@@ -47,76 +47,51 @@
 
 
 {% block main %}
-<div id="userinfo">
-    <div class="panel-heading"><h5>用户信息</h5></div>
-<div class="panel-body">
-    <table class="table table-bordered table-hover table-striped">
-        <thead>
-        <tr>
-            <th width="40" class="text-center"><input type="checkbox" name="checkbox"></th>
-            <th width="50" class="text-center">工号</th>
-            <th>姓名</th>
-            <th width="200" class="text-center">拥有虚拟机</th>
-            <th width="140" class="text-center">操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for vm in vms %}
-                    {% if not vm.vm_ob.config.template %}
-                        <tr id="r{{ forloop.counter }}">
-                            <td class="text-center">
-                                <input type="checkbox" name="checkbox" value="{{ vm.vm_ob.summary.config.instanceUuid }}">
-                            </td>
-                            <td class="text-center">
-                                {% if vm.vm_ob.guest.guestFamily == "windowsGuest" %}
-                                    Windows
-                                {% elif vm.vm_ob.guest.guestFamily == "linuxGuest" %}
-                                    Linux
-                                {% endif %}
-                            </td>
-                            <td>{{ vm.vm_ob.summary.config.name }}</td>
-                            <td class="text-center">{{ vm.vm_ob.summary.guest.ipAddress }}</td>
-
-                        <td class="text-center">{{ vm.vm_ob.summary.quickStats.overallCpuUsage }}/{{ vm.vm_ob.summary.runtime.maxCpuUsage }}</td>
-                        <td class="text-center">{{ vm.vm_ob.summary.quickStats.guestMemoryUsage }}/{{ vm.vm_ob.summary.runtime.maxMemoryUsage }}</td>
-                        <td class="text-center">{{ vm.user }}</td>
+    <div id="userinfo">
+        <div class="panel-heading"><h5>用户信息</h5></div>
+        <div class="panel-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th width="40" class="text-center"><input type="checkbox" name="checkbox"></th>
+                    <th width="50" class="text-center">工号</th>
+                    <th>姓名</th>
+                    <th width="200" class="text-center">拥有虚拟机</th>
+                    <th width="140" class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for use in users %}
+                    <tr id="r{{ forloop.counter }}">
                         <td class="text-center">
-                                <div class="btn-group">
-                                    {% if vm.enabled == 0 %}
-                                    <button type="button" class="btn btn-xs btn-primary">启用</button>
-                                    {% else %}
-                                    <button type="button" class="btn btn-xs">禁用</button>
-                                {% endif %}
-                            </div>
+                            <input type="checkbox" name="checkbox" value="{{ use}}">
                         </td>
-                        <td class="text-center opt">
-                            {% if vm.vm_ob.summary.runtime.powerState|length > 9 %}
-                                <button type="button" class="btn btn-sm btn-success btn_poweron"><i class="icon-play"></i>打开</button>
-                            {% else %}
-                                <button type="button" class="btn btn-sm btn-danger btn_poweroff"><i class="icon-off"></i>关机</button>
-                                <button type="button" class="btn btn-sm btn-danger btn_reboot"><i class="icon-refresh"></i>重启</button>
-                            {% endif %}
-                        </td>
+                        <td>{{ use.user.user_id }}</td>
+                        <td class="text-center">{{use.user.real_name }}</td>
+
+                        <td class="text-center">{{ use.vm_list | length }}</td>
+                        <td class="text-center">{{ use.user.user_id }}</td>
+
                     </tr>
-                {% endif %}
-            {% endfor %}
-            </tbody>
-            <tfoot>
-            <tr>
-                <th width="40" class="text-center"><input type="checkbox" name="checkbox"></th>
-                <th colspan="8">
-                    <button type="button" class="btn btn-danger"><i class="icon-trash"></i> 删除</button>
-                    <div class="pull-right">
-                        <ul class="pager">
-                            <li class="previous"><a href="#">«</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li class="next"><a href="#">»</a></li>
-                        </ul>
-                    </div>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
+
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th width="40" class="text-center"><input type="checkbox" name="checkbox"></th>
+                    <th colspan="8">
+                        <button type="button" class="btn btn-danger"><i class="icon-trash"></i> 删除</button>
+                        <div class="pull-right">
+                            <ul class="pager">
+                                <li class="previous"><a href="#">«</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li class="next"><a href="#">»</a></li>
+                            </ul>
+                        </div>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
-</div>
 {% endblock %}
