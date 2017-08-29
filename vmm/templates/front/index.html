@@ -5,11 +5,65 @@
 {% block page_js %}
     <script type="text/javascript" src="/static/js/common.js"></script>
 {% endblock %}
-{% block user_page %}
-    <a href="http://127.0.0.1:8000/front/list" id="ad_vm">
-        <i class="icon icon-bell-alt"></i>
-        <span>虚拟机</span>
-        {#                    <span class="arrow"></span>#}
-    </a>
-{% endblock %}
 {% block title %}虚拟机云管理{% endblock %}
+
+{% block block_sidebar %}
+            <div class="sidebar-menu">
+                <div class="item active">
+                    <a href="/backend/index">
+                        <i class="icon icon-dashboard"></i>
+                        <span>主页 </span>
+                    </a>
+                </div>
+                <div class="item vertical">
+                        <a href="#" >
+                            <i class="icon icon-bell-alt"></i>
+                            <span>虚拟机管理</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <div class="vertical-menu">
+                            <a href="/backend/list">虚拟机</a>
+                            <a href="/backend/createvm">申请虚拟机</a>
+                        </div>
+                </div>
+                <div class="item">
+                    <a href="/backend/modify">
+                        <i class="icon icon-cogs"></i>
+                        <span>修改密码</span>
+                    </a>
+                </div>
+            </div>
+            {% endblock %}
+
+
+{% block main %}
+    <div id="indexof">
+        <div class="panel-heading"><h5>主页</h5></div>
+        <div class="panel-body">
+            <div class="alert with-icon">
+                <i class="icon-star"></i>
+                <div class="content">
+                    <h4>拥有虚拟机</h4>
+                    <hr>
+                    <p>目前总数</p>
+                </div>
+            </div>
+            <div class="alert with-icon">
+                <i class="icon-th-large"></i>
+                <div class="content">
+                    <h4>正在运行</h4>
+                    <hr>
+                    <p>正在运行</p>
+                </div>
+            </div>
+            <div class="alert with-icon">
+                <i class="icon-info-sign"></i>
+                <div class="content">
+                    <h4>故障</h4>
+                    <hr>
+                    <p>待解决的故障</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

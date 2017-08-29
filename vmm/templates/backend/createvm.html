@@ -3,7 +3,51 @@
     <link rel="stylesheet" type="text/css" href="/static/css/createvm.css">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 {% endblock %}
+{% block title %}创建虚拟机{% endblock %}
     {% block page_js %}<script type="text/javascript" src="/static/js/common.js"></script>{% endblock %}
+
+{% block block_sidebar %}
+            <div class="sidebar-menu">
+                <div class="item">
+                    <a href="/backend/index">
+                        <i class="icon icon-dashboard"></i>
+                        <span>主页 </span>
+                    </a>
+                </div>
+                <div class="item vertical active open">
+                        <a href="#" >
+                            <i class="icon icon-bell-alt"></i>
+                            <span>虚拟机管理</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <div class="vertical-menu">
+                            <a href="/backend/list">虚拟机</a>
+                            <a style="color: #43a047" href="/backend/createvm">创建虚拟机</a>
+                            <a href="/backend/application">待处理申请</a>
+                            <a href="/backend/log">虚拟机日志</a>
+                        </div>
+                        </div>
+                <div class="item vertical">
+                    <a href="#">
+                        <i class="icon icon-cogs"></i>
+                        <span>用户管理</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <div class="vertical-menu">
+                        <a href="/backend/userinfo">用户信息</a>
+                        <a href="/backend/lockuser">锁定用户</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <a href="/backend/modify">
+                        <i class="icon icon-cogs"></i>
+                        <span>修改资料</span>
+                    </a>
+                </div>
+            </div>
+            {% endblock %}
+
+
 {% block main %}
 <div class="app_vm">
 <div class="panel-heading"><h5>虚拟机申请</h5></div>

@@ -281,3 +281,7 @@ input.text {
 .table .pager {
     margin: 0;
 }
+
+.alist {
+    color: #43a047 !important;
+}

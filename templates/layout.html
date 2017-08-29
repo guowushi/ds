@@ -48,7 +48,7 @@
 				</span>
                     <ul class="dropdown-menu pull-right">
                         <li>
-                            <a href="#">修改资料</a>
+                            <a href="#">修改密码</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -60,8 +60,9 @@
         </header>
     {% endblock %}
 
-    {% block block_sidebar %}
+
         <aside class="sidebar">
+            {% block block_sidebar %}
             <div class="sidebar-menu">
                 <div class="item active">
                     <a href="/backend/index">
@@ -96,12 +97,13 @@
                 <div class="item">
                     <a href="/backend/modify">
                         <i class="icon icon-cogs"></i>
-                        <span>修改资料</span>
+                        <span>修改密码</span>
                     </a>
                 </div>
             </div>
+            {% endblock %}
         </aside>
-    {% endblock %}
+
 
 
     <div class="main-content">

@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    // els = $('.table > tbody > tr');for(ind=0;ind<els.length;ind++){$(els[ind]).attr('id','tr'+ind);}
 
     $('.sidebar .item.vertical > a').click(function () {
         var ver = jQuery(this).next();
@@ -56,12 +55,14 @@ $(document).ready(function(){
 
     // 点击注销
     $('#logout').click(function () {
-        bootbox.confirm("确定要退出", function () {
-            $.post("/logout", function (data) {
-                if (data.ok == 'true') {
-                    window.location = "/login";
-                }
-            });
+        bootbox.confirm("确定要退出", function (result) {
+            if(result){
+                $.post("/logout", function (data) {
+                    if (data.ok == 'true') {
+                        window.location = "/login";
+                    }
+                });
+            }
         })
     });
 
