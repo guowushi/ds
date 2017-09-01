@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.template import loader, Context
 from django.contrib import admin
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 import simplejson
 
 # 引用VMware相关库
@@ -16,6 +17,8 @@ from pyVmomi import vim
 # 引用模型和表单
 from vmm.models import users
 from vmm.models import vms
+# 引入我们创建的表单类
+from vmm.forms import vm_regist
 
 '''
 定义一个方法，处理用户的管理员登录！
@@ -29,6 +32,13 @@ def index(request):
         return HttpResponse(html)
     else:
         return HttpResponse("error!")
+
+
+# ---------------------------------------------------------------------------------------------------------------
+
+'''
+（1）显示所有的虚拟机列表
+'''
 
 
 def listvm(request):
@@ -74,6 +84,43 @@ def listvm(request):
         return HttpResponse("页面未找到！")
 
 
+'''
+(2)创建虚拟机
+'''
+
+
+def createvm(request):
+    user_number = request.session.get('user_number')
+    if request.session.get('user_number'):
+        if request.method == 'POST':  # 当提交表单时
+            vm_regist_info = vm_regist(request.POST)  # form 包含提交的数据
+            if vm_regist_info.is_valid():  # 如果提交的数据合法
+                print("输入数据合法！ ")
+                print(vm_regist_info.cleaned_data)
+            else:
+                print("输入数据不合法！")
+                print(vm_regist_info.cleaned_data)
+        else:  # 当正常访问时
+            vm_regist_info = vm_regist()
+        return render(request, 'backend/createvm.html', {'form': vm_regist_info})
+    else:
+        return HttpResponse("你还未登录，点击<a href=\"/login/\">这里</a>登录!")
+
+
+def dispapp(request):
+    tp = loader.get_template("backend/disapp.html")
+    html = tp.render({"count": 1, "vms": 2})
+    return HttpResponse(html)
+
+
+class vm_obj(object):
+    def __int__(self, vm_ob, user, enabled, vm_list):
+        self.vm_ob = vm_ob
+        self.user = user
+        self.enabled = enabled
+        self.vm_list = vm_list
+
+
 # 虚拟机电源管理
 def power(request):
     uuid = request.GET.get('uuid')
@@ -101,13 +148,34 @@ def power(request):
     return HttpResponse(simplejson.dumps(data, ensure_ascii=False), content_type="application/json")
 
 
-# 存放虚拟机对象和使用者禁用状态
-class vm_obj(object):
-    def __int__(self, vm_ob, user, enabled, vm_list):
-        self.vm_ob = vm_ob
-        self.user = user
-        self.enabled = enabled
-        self.vm_list = vm_list
+'''
+显示用户信息
+'''
+
+
+def users_infor(request):
+    vm_infor = vms.objects.all()  # 获得vms表单信息
+    user_info = users.objects.all()  # 获得users表单信息
+    users_ob = []  # 存放信息列表
+    for user in user_info:
+        user_ob = vm_obj()
+        user_ob.user = user
+        vms_ob = []
+        for vm in vm_infor:
+            if (vm.vm_user_id == user.user_id):
+                vms_ob.append(vm)
+        user_ob.vm_list = vms_ob
+        users_ob.append(user_ob)
+
+    print (users_ob[1].user.real_name)
+    tp = loader.get_template("backend/profile.html")
+    html = tp.render({"users": users_ob})
+    return HttpResponse(html)
+
+
+'''
+显示用户信息
+'''
 
 
 def users_infor(request):

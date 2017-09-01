@@ -35,14 +35,17 @@ urlpatterns = [
     url(r'^logout', vmm.login.logout),  # 退出
     url(r'^login/', vmm.login.login),
     # -------------------------------
-    url(r'^backend/index', vmm.admin.index),
-    url(r'^backend/list', vmm.admin.listvm),
-    url(r'^backend/power', vmm.admin.power),
-    url(r'^backend/createvm', vmm.common.createvm),
-    url(r'^backend/profile', vmm.admin.users_infor),
+    url(r'^backend/index', vmm.admin.index),  # 首页
+    url(r'^backend/list', vmm.admin.listvm),  # 虚拟机列表
+    url(r'^backend/createvm', vmm.common.createvm),  # 创建虚拟机
+    url(r'^backend/dispapp', vmm.admin.dispapp),  # 待处理申请
+    url(r'^backend/profile', vmm.admin.users_infor),  # 用户列表
+    # url(r'^backend/profile', vmm.admin.users_infor),     #修改个人信息
+    url(r'^backend/dispapp', vmm.admin.users_infor),
+    url(r'^backend/power', vmm.admin.power),  #
     # -------------------------------
-    url(r'^front/index', vmm.user.index),
-    url(r'^front/list', vmm.user.listvm),
+    url(r'^front/index', vmm.user.index),  # 首页
+    url(r'^front/list', vmm.user.listvm),  #虚拟机列表
     url(r'^front/profile', vmm.user.profile),  # 修改个人基本信息
 
 

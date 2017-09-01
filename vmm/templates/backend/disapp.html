@@ -8,47 +8,7 @@
 {% endblock %}
 {% block title %}申请虚拟机{% endblock %}
 
-{% block block_sidebar %}
-            <div class="sidebar-menu">
-                <div class="item">
-                    <a href="/backend/index">
-                        <i class="icon icon-dashboard"></i>
-                        <span>主页 </span>
-                    </a>
-                </div>
-                <div class="item vertical active open">
-                        <a href="#" >
-                            <i class="icon icon-bell-alt"></i>
-                            <span>虚拟机管理</span>
-                            <span class="arrow"></span>
-                        </a>
-                        <div class="vertical-menu">
-                            <a href="/backend/list">虚拟机</a>
-                            <a href="/backend/createvm">创建虚拟机</a>
-                            <a style="color: #43a047" href="/backend/application">待处理申请</a>
-                            <a href="/backend/log">虚拟机日志</a>
-                        </div>
-                        </div>
-                <div class="item vertical">
-                    <a href="#">
-                        <i class="icon icon-cogs"></i>
-                        <span>用户管理</span>
-                        <span class="arrow"></span>
-                    </a>
-                    <div class="vertical-menu">
-                        <a href="/backend/userinfo">用户信息</a>
-                        <a href="/backend/lockuser">锁定用户</a>
-                    </div>
-                </div>
-                <div class="item">
-                    <a href="/backend/modify">
-                        <i class="icon icon-cogs"></i>
-                        <span>修改资料</span>
-                    </a>
-                </div>
-            </div>
-            {% endblock %}
-·
+
 {% block main %}
 <div id="listvmm">
     <div class="panel-heading"><h5>虚拟机管理</h5></div>
@@ -66,47 +26,8 @@
         </thead>
         <tbody>
 
-        {% for vm in vms %}
-
-                    {% if not vm.vm_ob.config.template %}
-                        <tr id="r{{ forloop.counter }}">
-                            <td class="text-center">
-                                <input type="checkbox" name="checkbox" value="{{ vm.vm_ob.summary.config.instanceUuid }}">
-                            </td>
-                            <td class="text-center">
-                                {% if vm.vm_ob.guest.guestFamily == "windowsGuest" %}
-                                    Windows
-                                {% elif vm.vm_ob.guest.guestFamily == "linuxGuest" %}
-                                    Linux
-                                {% endif %}
-                            </td>
-                            <td>{{ vm.vm_ob.summary.config.name }}</td>
-                            <td class="text-center">{{ vm.vm_ob.summary.guest.ipAddress }}</td>
-
-                        <td class="text-center">{{ vm.vm_ob.summary.quickStats.overallCpuUsage }}/{{ vm.vm_ob.summary.runtime.maxCpuUsage }}</td>
-                        <td class="text-center">{{ vm.vm_ob.summary.quickStats.guestMemoryUsage }}/{{ vm.vm_ob.summary.runtime.maxMemoryUsage }}</td>
-                        <td class="text-center">{{ vm.user }}</td>
-                        <td class="text-center">
-                                <div class="btn-group">
-                                    {% if vm.enabled == 0 %}
-                                    <button type="button" class="btn btn-xs btn-primary">启用</button>
-                                    {% else %}
-                                    <button type="button" class="btn btn-xs">禁用</button>
-                                {% endif %}
-                            </div>
-                        </td>
-                        <td class="text-center opt">
-                            {% if vm.vm_ob.summary.runtime.powerState|length > 9 %}
-                                <button type="button" class="btn btn-sm btn-success btn_poweron"><i class="icon-play"></i>打开</button>
-                            {% else %}
-                                <button type="button" class="btn btn-sm btn-danger btn_poweroff"><i class="icon-off"></i>关机</button>
-                                <button type="button" class="btn btn-sm btn-danger btn_reboot"><i class="icon-refresh"></i>重启</button>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-            </tbody>
+        
+        </tbody>
             <tfoot>
             <tr>
                 <th width="40" class="text-center"><input type="checkbox" name="checkbox"></th>

@@ -7,13 +7,8 @@ from pyVmomi import vim
 from pyVim import connect
 from pyVim.connect import SmartConnect, Disconnect
 
-# 引入我们创建的表单类
-from vmm.django_forms.forms import vm_regist
-#引入我们创建的模型类
-from vmm.models import vm_info
 
-
-#克隆虚拟机
+# 克隆虚拟机
 def wait_for_task(task):
     """ wait for a vCenter task to finish """
     task_done = False
@@ -24,6 +19,7 @@ def wait_for_task(task):
         if task.info.state == 'error':
             print("there was an error")
             task_done = True
+
 
 def get_obj(content, vimtype, name):
     """
@@ -43,6 +39,7 @@ def get_obj(content, vimtype, name):
             break
 
     return obj
+
 
 def clone_vm(
         content, template, vm_name, si,
@@ -88,6 +85,7 @@ def clone_vm(
     task = template.Clone(folder=destfolder, name=vm_name, spec=clonespec)
     wait_for_task(task)
 
+
 def creat(request):
     """
     Let this thing fly
@@ -117,20 +115,3 @@ def creat(request):
         return HttpResponse("template not found")
 
 
-#创建虚拟机
-def createvm(request):
-    user_number = request.session.get('user_number')
-    if request.session.get('user_number'):
-        if request.method == 'POST':  # 当提交表单时
-            vm_regist_info = vm_regist(request.POST)  # form 包含提交的数据
-            if vm_regist_info.is_valid():  # 如果提交的数据合法
-                print("输入数据合法！ ")
-                print(vm_regist_info.cleaned_data)
-            else:
-                print("输入数据不合法！")
-                print(vm_regist_info.cleaned_data)
-        else:  # 当正常访问时
-            vm_regist_info = vm_regist()
-        return render(request, 'vmm/createvm.html', {'form': vm_regist_info})
-    else:
-        return HttpResponse("你还未登录，点击<a href=\"/login/\">这里</a>登录!")
