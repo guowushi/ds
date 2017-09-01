@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for ds project.
 
@@ -125,3 +126,20 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+
+
+
+
+
+#以下为发送邮件参数
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = False
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'mypython1@163.com'
+EMAIL_HOST_PASSWORD = 'mypython1'
+DEFAULT_FROM_EMAIL = 'Admin<mypython1@163.com>'
+
+
+DOMAIN='localhost:8099'

@@ -64,18 +64,18 @@ $(document).ready(function(){
     //     }
     // });
 
-    $('#poweron').click(function(){
-        if (confirm("确定要关机吗？")) {
-            $.ajax({
-                type: "GET",
-                url: "/power?uuid=" + uuid + "&type=" + '0',
-                success: function (msg) {
-                    if (msg == '0') {
-                        $("#id").load(thisurl + '#id');
-                        }
-                    }
-            });
-        }
-    })
+    // $('#poweron').click(function(){
+    //     if (confirm("确定要关机吗？")) {
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "/power?uuid=" + uuid + "&type=" + '0',
+    //             success: function (msg) {
+    //                 if (msg == '0') {
+    //                     $("#id").load(thisurl + '#id');
+    //                     }
+    //                 }
+    //         });
+    //     }
+    // })
 
 });

@@ -27,14 +27,16 @@
         <div class="form-group">
             <label class="col-sm-2 ulable">密码</label>
             <div class="col-md-6 col-sm-10">
-                <input type="password" id="user_password" data-toggle="passtip" class="form-control" placeholder="密码" name="user_password">
+                <input type="password" id="user_password" data-toggle="passtip" class="form-control" placeholder="密码"
+                       name="user_password">
             </div>
             <button type="button" class="forget" data-toggle="modal" data-target="#for">忘记密码</button>
         </div>
         <div class="form-group">
             <label class="col-sm-2 ulable">验证码</label>
             <div class="col-md-6 col-sm-10">
-                <input type="text" id="id_captcha_1" data-toggle="captip" class="form-control"  name="captcha_1" placeholder="验证码">
+                <input type="text" id="id_captcha_1" data-toggle="captip" class="form-control" name="captcha_1"
+                       placeholder="验证码">
                 <img src="{{ imgage_url }}" class="captcha" alt="captcha">
                 <input id="id_captcha_0" name="captcha_0" type="hidden" value="{{ hashkey }}">{{ form.captcha }}
             </div>
@@ -58,43 +60,55 @@
                 <h4 class="modal-title">注册账号</h4>
             </div>
             <div id="reg_bd" class="modal-body">
-                <form action="/userregist/" method="POST" class="form-horizontal">
+                <form action="/userregist/" method="POST" class="form-horizontal regform">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label class="col-sm-2 ">账号</label>
+                        <label class="col-sm-2 required">账号</label>
                         <div class="col-md-6 col-sm-10">
-                            <input type="text" class="form-control" name="user_number" placeholder="工号(教师或学生账号)">
+                            <input type="text" class="form-control" name="user_id" data-toggle="reg_id_tip" placeholder="工号(教师或学生账号)">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 ">姓名</label>
+                        <label class="col-sm-2 required">姓名</label>
                         <div class="col-md-6 col-sm-10">
-                            <input type="text" class="form-control" name="user_number" placeholder="真实姓名">
+                            <input type="text" class="form-control" name="real_name" data-toggle="reg_name_tip" placeholder="真实姓名">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 ">密码</label>
+                        <label class="col-sm-2 required">密码</label>
                         <div class="col-md-6 col-sm-10">
-                            <input type="password" class="form-control" name="user_number" placeholder="密码">
+                            <input type="password" class="form-control" name="user_password1" data-toggle="reg_pass_tip" placeholder="密码">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2">确认密码</label>
+                        <label class="col-sm-2 required">确认密码</label>
                         <div class="col-md-6 col-sm-10">
-                            <input type="password" class="form-control" name="user_number" placeholder="确认密码">
+                            <input type="password" class="form-control" name="user_password2" data-toggle="reg_repass_tip" placeholder="确认密码">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2">邮箱</label>
+                        <label class="col-sm-2">手机号码</label>
                         <div class="col-md-6 col-sm-10">
-                            <input type="email" class="form-control" name="user_number" placeholder="邮箱">
+                            <input type="text" class="form-control norequired" name="mobile" data-toggle="reg_phone_tip" placeholder="手机号码">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 required">邮箱</label>
+                        <div class="col-md-6 col-sm-10">
+                            <input type="email" class="form-control" name="email" data-toggle="reg_email_tip" placeholder="邮箱">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2">备注</label>
+                        <div class="col-md-6 col-sm-10">
+                            <input type="text" class="form-control norequired" name="comment" data-toggle="reg_remark_tip" placeholder="备注">
+                        </div>
+                    </div>
+                    <div id="zfootr" class="form-group">
+                        <button type="button" class="btn btn-primary reg_bt">注册</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </form>
-            </div>
-            <div id="zfootr" class="modal-footer">
-                <button type="submit" class="btn btn-primary reg_bt">注册</button>
-                <button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
         </div>
     </div>
@@ -109,17 +123,17 @@
                         class="sr-only">关闭</span></button>
                 <h4 class="modal-title">找回密码</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body findp">
                 <form class="form-inline">
                     <div class="form-group">
                         <label>邮箱</label>
-                        <input type="text" class="form-control" placeholder="you@me.com">
+                        <input type="text" class="form-control" data-toggle="f_email_tip" name="email" placeholder="you@me.com">
                     </div>
                     <div class="form-group">
                         <label>工号</label>
-                        <input type="password" class="form-control" placeholder="XXXX-XXXX-XXXX">
+                        <input type="text" class="form-control" data-toggle="f_id_tip" name="f_id" placeholder="1234567">
                     </div>
-                    <button type="submit" class="btn btn-primary">找回密码</button>
+                    <button type="button" class="btn btn-primary Fpass">找回密码</button>
                 </form>
             </div>
         </div>

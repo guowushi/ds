@@ -44,4 +44,12 @@ urlpatterns = [
     url(r'^front/index', vmm.user.index),
     url(r'^front/list', vmm.user.listvm),
     url(r'^front/profile', vmm.user.profile),  # 修改个人基本信息
+
+
+
+    url(r'^userregist', vmm.login.userregist),
+    url(r'^emailht', vmm.login.email),
+
+
+    url(r'^emailht/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$',vmm.login.email,name='active_user')
 ]
