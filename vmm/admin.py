@@ -196,3 +196,7 @@ def users_infor(request):
     tp = loader.get_template("backend/profile.html")
     html = tp.render({"users": users_ob})
     return HttpResponse(html)
+
+
+def modify(request):
+    pass

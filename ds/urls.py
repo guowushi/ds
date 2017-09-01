@@ -40,8 +40,10 @@ urlpatterns = [
     url(r'^backend/createvm', vmm.common.createvm),  # 创建虚拟机
     url(r'^backend/dispapp', vmm.admin.dispapp),  # 待处理申请
     url(r'^backend/profile', vmm.admin.users_infor),  # 用户列表
-    # url(r'^backend/profile', vmm.admin.users_infor),     #修改个人信息
-    url(r'^backend/dispapp', vmm.admin.users_infor),
+    url(r'^backend/modify', vmm.admin.users_infor),  # 修改个人信息
+
+
+
     url(r'^backend/power', vmm.admin.power),  #
     # -------------------------------
     url(r'^front/index', vmm.user.index),  # 首页
