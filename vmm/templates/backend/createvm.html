@@ -11,7 +11,7 @@
 {% block main %}
 <div class="app_vm">
 <div class="panel-heading"><h5>虚拟机申请</h5></div>
-    <form class="create_f" method='POST'>
+    <form class="create_f" method='POST' action="/change/">
         {% csrf_token %}
         <div class="form-group">
             <label>虚拟机名字</label>

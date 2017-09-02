@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-# 从django.http命名空间引入一个HttpResponse的类
-from django.http import HttpResponse
-from django.template import loader, Context
-from django.contrib import admin
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-import simplejson
 
 # 引用VMware相关库
 import atexit
-from pyVim import connect
-from pyVmomi import vmodl
-from pyVmomi import vim
 
-# 引用模型和表单
-from vmm.models import users
-from vmm.models import vms
+import simplejson
+# 从django.http命名空间引入一个HttpResponse的类
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.template import loader
+from pyVim import connect
+from pyVmomi import vim
+from pyVmomi import vmodl
+from vmm.model.models import vm_obj
+
 # 引入我们创建的表单类
-from vmm.forms import vm_regist
+from vmm.model.forms import vm_regist
+# 引用模型和表单
+from vmm.model.models import users
+from vmm.model.models import vms
 
 '''
 定义一个方法，处理用户的管理员登录！
@@ -84,14 +84,17 @@ def listvm(request):
         return HttpResponse("页面未找到！")
 
 
+
+#-----------------------------------------------------------------------------------------------
+
+
+
 '''
 (2)创建虚拟机
 '''
-
-
 def createvm(request):
-    user_number = request.session.get('user_number')
-    if request.session.get('user_number'):
+    user_number = request.session.get('user_id')
+    if request.session.get('user_id'):
         if request.method == 'POST':  # 当提交表单时
             vm_regist_info = vm_regist(request.POST)  # form 包含提交的数据
             if vm_regist_info.is_valid():  # 如果提交的数据合法
@@ -113,15 +116,17 @@ def dispapp(request):
     return HttpResponse(html)
 
 
-class vm_obj(object):
-    def __int__(self, vm_ob, user, enabled, vm_list):
-        self.vm_ob = vm_ob
-        self.user = user
-        self.enabled = enabled
-        self.vm_list = vm_list
 
 
-# 虚拟机电源管理
+
+
+#-----------------------------------------------------------------------------------------------
+
+
+
+'''
+虚拟机电源管理
+'''
 def power(request):
     uuid = request.GET.get('uuid')
     op_type = request.GET.get('type')
@@ -148,12 +153,14 @@ def power(request):
     return HttpResponse(simplejson.dumps(data, ensure_ascii=False), content_type="application/json")
 
 
-'''
-显示用户信息
-'''
+#---------------------------------------------------------------------------------------------------
 
 
-def users_infor(request):
+
+'''
+显示用户列表
+'''
+def profile(request):
     vm_infor = vms.objects.all()  # 获得vms表单信息
     user_info = users.objects.all()  # 获得users表单信息
     users_ob = []  # 存放信息列表
@@ -173,30 +180,15 @@ def users_infor(request):
     return HttpResponse(html)
 
 
+#--------------------------------------------------------------------------------------------------------
+
+
+
+
 '''
-显示用户信息
+修改个人信息
 '''
-
-
-def users_infor(request):
-    vm_infor = vms.objects.all()  # 获得vms表单信息
-    user_info = users.objects.all()  # 获得users表单信息
-    users_ob = []  # 存放信息列表
-    for user in user_info:
-        user_ob = vm_obj()
-        user_ob.user = user
-        vms_ob = []
-        for vm in vm_infor:
-            if (vm.vm_user_id == user.user_id):
-                vms_ob.append(vm)
-        user_ob.vm_list = vms_ob
-        users_ob.append(user_ob)
-
-    print (users_ob[1].user.real_name)
-    tp = loader.get_template("backend/profile.html")
-    html = tp.render({"users": users_ob})
-    return HttpResponse(html)
-
-
 def modify(request):
-    pass
+    tp = loader.get_template("backend/modify.html")
+    html = tp.render()
+    return HttpResponse(html)

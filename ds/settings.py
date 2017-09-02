@@ -142,4 +142,4 @@ EMAIL_HOST_PASSWORD = 'mypython1'
 DEFAULT_FROM_EMAIL = 'Admin<mypython1@163.com>'
 
 
-DOMAIN='localhost:8099'
+DOMAIN='http://127.0.0.1:8000'

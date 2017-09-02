@@ -10,7 +10,7 @@
 {% block block_sidebar %}
             <div class="sidebar-menu">
                 <div class="item">
-                    <a href="/font/index">
+                    <a href="/front/index">
                         <i class="icon icon-dashboard"></i>
                         <span>主页 </span>
                     </a>
@@ -23,7 +23,7 @@
                         </a>
                         <div class="vertical-menu">
                             <a href="/front/list">虚拟机</a>
-                            <a href="/front/createvm">创建虚拟机</a>
+                            <a href="/front/createvm">申请虚拟机</a>
                         </div>
                 </div>
                 <div class="item active">
@@ -40,7 +40,7 @@
 <div id="modifyinfo">
     <div class="panel-heading"><h5>修改信息</h5></div>
 <div class="panel-body">
-    <form>
+    <form action="/change/" method="POST">
         <div class="form-group">
             <label>工号</label>
             <input type="text" class="form-control" placeholder="工号">

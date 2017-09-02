@@ -19,7 +19,6 @@ from django.contrib import admin
 import vmm.login
 import vmm.admin
 import vmm.user
-import vmm.common
 
 # 验证码模块开始#
 from captcha.models import CaptchaStore
@@ -29,32 +28,35 @@ from captcha.helpers import captcha_image_url
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^listvm/', vmm.login.listvm),
     url(r'^captcha/', include('captcha.urls')),  # 这是生成验证码的图片
     url(r'^refresh/$', vmm.login.captcha_refresh, name='captcha-refresh'),  # 刷新验证码
     url(r'^logout', vmm.login.logout),  # 退出
     url(r'^login/', vmm.login.login),
+    url(r'^backend/power', vmm.admin.power),  # 电源管理
+
+
+
     # -------------------------------
     url(r'^backend/index', vmm.admin.index),  # 首页
     url(r'^backend/list', vmm.admin.listvm),  # 虚拟机列表
-    url(r'^backend/createvm', vmm.common.createvm),  # 创建虚拟机
+    url(r'^backend/createvm', vmm.admin.createvm),  # 创建虚拟机
     url(r'^backend/dispapp', vmm.admin.dispapp),  # 待处理申请
-    url(r'^backend/profile', vmm.admin.users_infor),  # 用户列表
-    url(r'^backend/modify', vmm.admin.users_infor),  # 修改个人信息
+    url(r'^backend/profile', vmm.admin.profile),  # 用户列表
+    url(r'^backend/modify', vmm.admin.modify),  # 修改个人信息
 
 
 
-    url(r'^backend/power', vmm.admin.power),  #
+
     # -------------------------------
     url(r'^front/index', vmm.user.index),  # 首页
     url(r'^front/list', vmm.user.listvm),  #虚拟机列表
-    url(r'^front/profile', vmm.user.profile),  # 修改个人基本信息
+    url(r'^front/createvm', vmm.user.createvm),  # 创建虚拟机
+    url(r'^front/modify', vmm.user.modify),  # 修改个人基本信息
 
 
 
     url(r'^userregist', vmm.login.userregist),
-    url(r'^emailht', vmm.login.email),
 
 
-    url(r'^emailht/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$',vmm.login.email,name='active_user')
+    url(r'^active_user/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$',vmm.login.active_user,name='active_user')
 ]

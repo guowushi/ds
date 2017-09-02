@@ -151,7 +151,7 @@ $('.reg_bt').click(function () {
                         placement: 'center' // 定义显示位置
                     }).show();
                     }else if(result.reg == "注册"){
-                        new $.zui.Messager('注册成功', {
+                        new $.zui.Messager('请前往邮箱验证', {
                         type: 'warning',
                         icon: 'warning-sign',
                         time: '3000',
@@ -197,20 +197,20 @@ $('input[name="user_password2"]').click(function () {
     $(this).tooltip('destroy');
 });
 
-$('input[name="mobile"]').click(function () {
-    $(this).parent('.col-md-6').removeClass('has-warning');
-    $(this).tooltip('destroy');
-});
+// $('input[name="mobile"]').click(function () {
+//     $(this).parent('.col-md-6').removeClass('has-warning');
+//     $(this).tooltip('destroy');
+// });
 
 $('input[name="email"]').click(function () {
     $(this).parent('.col-md-6').removeClass('has-warning');
     $(this).tooltip('destroy');
 });
 
-$('input[name="comment"]').click(function () {
-    $(this).parent('.col-md-6').removeClass('has-warning');
-    $(this).tooltip('destroy');
-});
+//  $('input[name="comment"]').click(function () {
+//     $(this).parent('.col-md-6').removeClass('has-warning');
+//     $(this).tooltip('destroy');
+// });
 
 
 

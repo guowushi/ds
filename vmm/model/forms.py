@@ -16,8 +16,6 @@ class user_regist(forms.Form):
     user_password2 = forms.CharField()
     real_name = forms.CharField()
     email = forms.EmailField()
-    mobile=forms.CharField()
-    comment = forms.CharField()
 
 
 class vm_regist(forms.Form):

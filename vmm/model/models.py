@@ -16,6 +16,7 @@ class users(models.Model):
     mobile = models.CharField(max_length=11,blank=True)
     isadmin = models.BooleanField(default=False)
     comment = models.TextField(blank=True)
+    isactive=models.BooleanField(default=False)
 
     def __unicode__(self):  # 在Python3中使用 def __str__(self):
         return self.user_id  # 返回这张表的主键，用于区分数据库中的不同表
@@ -42,3 +43,15 @@ class vms(models.Model):
 
     def __unicode__(self):
         return self.vm_uuid
+
+
+
+'''
+自定义的类,用来存放相关数据
+'''
+class vm_obj(object):
+    def __int__(self, vm_ob, user, enabled, vm_list):
+        self.vm_ob = vm_ob
+        self.user = user
+        self.enabled = enabled
+        self.vm_list = vm_list

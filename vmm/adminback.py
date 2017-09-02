@@ -1,14 +1,41 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponse
-from django.shortcuts import render
+# 导入vSphere SDK模块
 import atexit
-from pyVmomi import vmodl
-from pyVmomi import vim
+
+from django.http import HttpResponse
+from django.template import loader
 from pyVim import connect
-from pyVim.connect import SmartConnect, Disconnect
+from pyVim.connect import Disconnect
+from pyVmomi import vim
+
+from vmm.model.forms import vm_regist
 
 
-# 克隆虚拟机
+#-------------------------------------------------------------------------------------------------
+# 创建虚拟机
+def createvm(request):
+    user_id = request.session.get('user_id')
+    if request.session.get('user_id'):
+        if request.method == 'POST':  # 当提交表单时
+            vm_regist_info = vm_regist(request.POST)  # form 包含提交的数据
+            if vm_regist_info.is_valid():  # 如果提交的数据合法
+                print("输入数据合法！ ")
+                print(vm_regist_info.cleaned_data)
+            else:
+                print("输入数据不合法！")
+                print(vm_regist_info.cleaned_data)
+        else:  # 当正常访问时
+            vm_regist_info = vm_regist()
+        tp = loader.get_template("backend/createvm.html")
+        html = tp.render()
+        return HttpResponse(html)
+        # return render(request, 'vmm/templates/backend/createvm.html', {'form': vm_regist_info})
+    else:
+        return HttpResponse("你还未登录，点击<a href=\"/login/\">这里</a>登录!")
+
+        # 克隆虚拟机
+
+
 def wait_for_task(task):
     """ wait for a vCenter task to finish """
     task_done = False
@@ -87,6 +114,7 @@ def clone_vm(
 
 
 def creat(request):
+
     """
     Let this thing fly
     """
@@ -114,4 +142,4 @@ def creat(request):
     else:
         return HttpResponse("template not found")
 
-
+#------------------------------------------------------------------------------------------------------------
