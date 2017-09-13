@@ -1,118 +1,111 @@
-@media (max-width: 2000px) {
 
-	html, body {
-		height: 100%;
-		width: 100%;
-		margin: 0;
-		padding: 0;
-	}
-
-	* {
-		font-family: 幼圆;
-	}
-
-	body {
-		background: url(../images/loginbg1.jpg);
-		width: 100%;
-		height: 100%;
-		background-size: 100% 100%;
-		position: absolute;
-		filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/loginbg1.jpg', sizingMethod='scale');
-	}
-
-	#dl {
-		z-index: 1;
-		background: #fff;
-		width: 580px;
-		height: 330px;
-		text-align: center;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin: -150px 0 0 -290px;
-		opacity: 0.8;
-		border-radius: 9px;
-	}
-
-	.title {
-		z-index: 100;
-		font-size: 33px;
-		/*	color: aqua; */
-		color: #000;
-		text-align: center;
-		width: 330px;
-		height: 44px;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin: -155px 0 0 -167px;
-	}
-
-	.register {
-		z-index: 100;
-		font-size: 18px;
-		background-color: transparent;
-		color: #000;
-		border: none;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin: -70px 0 0 135px;
-	}
-
-	.forget {
-		z-index: 100;
-		background-color: transparent;
-		border: none;
-		font-size: 18px;
-		color: #000;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin: -16px 0 0 135px;
-	}
-
-	.dlfrom {
-		margin-top: 95px;
-		margin-left: 100px;
-	}
-
-	.ulable {
-		font-size: 18px;
-		color: #000;
-		text-align: left;
-	}
-
-	#id_captcha_1 {
-		width: 110px;
-	}
-
-	.captcha {
-		margin: -32px 0 0 110px;
-		cursor: pointer;
-		max-height: 33px;
-	}
-
-	.dlbu {
-		padding-right: 130px;
-		margin-top: 35px;
-
-	}
-
-	/*注册模块样式*/
-	#zfootr {
-		text-align: center;
-		margin-right: 90px;
-	}
-
-	#reg_bd {
-		text-align: center;
-		padding-left: 120px;
-	}
-
-	#zc-dia {
-		width: 560px;
-	}
-
-	/*注册模块样式结束*/
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
+
+body {
+    background: url(../images/login_bgx.gif);
+}
+
+#dl {
+    z-index: 1;
+    width: 580px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 98px;
+
+}
+
+#dl .login_boder input {
+    max-width: 253px;
+}
+
+.login_boder {
+    background: url(../images/login_m_bg_meitu_2.png) no-repeat center;
+    height: 380px;
+    width: 535px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 28px 47px 20px 47px;
+    overflow: hidden;
+    /*position: absolute;*/
+    /*position: relative;*/
+}
+
+/*form {*/
+/*position: relative;*/
+/*}*/
+
+.title {
+    font-weight: normal;
+    z-index: 100;
+    font-size: 23px;
+    text-align: center;
+    margin-bottom: 25px;
+    width: 330px;
+    height: 44px;
+}
+
+.form-group {
+    margin-bottom: 25px !important;
+    margin-left: 20px !important;
+    margin-top: 25px !important;
+    /*position: relative;*/
+}
+
+.register {
+    z-index: 100;
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
+    margin-left: -40px;
+    /*position: absolute;*/
+
+}
+
+.forget {
+    z-index: 100;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    margin-left: -40px;
+    /*position: absolute;*/
+}
+
+#id_captcha_1 {
+    width: 110px;
+}
+
+.captcha {
+    /*margin: 0 auto;*/
+    margin: -32px 0 0 30px;
+    /*margin-left: 25px;*/
+    cursor: pointer;
+    position: absolute;
+    max-height: 33px;
+}
+
+.dlbu {
+    padding-right: 85px;
+    padding-top: 25px;
+}
+
+/*注册模块样式*/
+#zfootr {
+    text-align: center;
+    margin-right: 90px;
+}
+
+#reg_bd {
+    text-align: center;
+    padding-left: 120px;
+}
+
+#zc-dia {
+    width: 560px;
+}
+
+/*注册模块样式结束*/

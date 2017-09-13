@@ -1,8 +1,9 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" user-scalable=no>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static '/css/login.css' %}"/>
     <link type="text/css" rel="stylesheet" href="{% static '/zui/css/zui.css' %}"/>
@@ -13,19 +14,21 @@
     <title>登录云管理平台</title>
 </head>
 <body>
+
 <div id="dl">
-    <form action='' method='POST' class="form-horizontal dlfrom">
+    <span class="title">虚拟机云管理平台</span>
+    <div class="login_boder">
+        <form action='' method='POST' class="form-horizontal">
         {% csrf_token %}
-        <span class="title">虚拟机云管理平台</span>
-        <div class="form-group u">
-            <label class="col-sm-2 ulable">账号</label>
+            <div class="form-group">
+                <label class="col-sm-2">账号</label>
             <div class="col-md-6 col-sm-10">
                 <input type="text" class="form-control" data-toggle="usertip" placeholder="电子邮件/手机号/用户名" name="user_id">
             </div>
             <button class="register" type="button" data-toggle="modal" data-target="#reg">注册账号</button>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 ulable">密码</label>
+            <label class="col-sm-2">密码</label>
             <div class="col-md-6 col-sm-10">
                 <input type="password" id="user_password" data-toggle="passtip" class="form-control" placeholder="密码"
                        name="user_password">
@@ -33,7 +36,7 @@
             <button type="button" class="forget" data-toggle="modal" data-target="#for">忘记密码</button>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 ulable">验证码</label>
+            <label class="col-sm-2">验证码</label>
             <div class="col-md-6 col-sm-10">
                 <input type="text" id="id_captcha_1" data-toggle="captip" class="form-control" name="captcha_1"
                        placeholder="验证码">
@@ -47,6 +50,8 @@
             </div>
         </div>
     </form>
+    </div>
+
 </div>
 
 {#注册框#}
