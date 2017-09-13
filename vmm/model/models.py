@@ -39,8 +39,9 @@ class vms(models.Model):
     vm_cpu = models.IntegerField()
     vm_memory = models.IntegerField()
     vm_disks = models.IntegerField()
-    vm_enabled = models.IntegerField(default=False)
-
+    vm_enabled = models.IntegerField(default=1)
+    vm_power = models.IntegerField(default=0)
+    vm_dispose=models.BooleanField(default=False)
     def __unicode__(self):
         return self.vm_uuid
 

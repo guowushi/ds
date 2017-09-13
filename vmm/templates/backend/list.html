@@ -23,8 +23,8 @@
             <th width="50" class="text-center">系统</th>
             <th>主机</th>
             <th width="200" class="text-center">IP地址</th>
-            <th width="140" class="text-center">CPU/MHz</th>
-            <th width="140" class="text-center">内存/MB</th>
+            <th width="140" class="text-center">CPU/核</th>
+            <th width="140" class="text-center">内存/GB</th>
             <th width="150" class="text-center">使用人</th>
             <th width="100" class="text-center">状态</th>
             <th width="140" class="text-center">操作</th>
@@ -34,24 +34,17 @@
 
 
         {% for vm in vms %}
-
-                    {% if not vm.vm_ob.config.template %}
                         <tr id="r{{ forloop.counter }}">
                             <td class="text-center">
-                                <input type="checkbox" name="checkbox" value="{{ vm.vm_ob.summary.config.instanceUuid }}">
+                                <input type="checkbox" name="checkbox" value="{{ vm.vm_ob.vm_uuid }}">
                             </td>
-                            <td class="text-center">
-                                {% if vm.vm_ob.guest.guestFamily == "windowsGuest" %}
-                                    Windows
-                                {% elif vm.vm_ob.guest.guestFamily == "linuxGuest" %}
-                                    Linux
-                                {% endif %}
+                            <td class="text-center">{{ vm.vm_ob.vm_os }}
                             </td>
-                            <td>{{ vm.vm_ob.summary.config.name }}</td>
-                            <td class="text-center">{{ vm.vm_ob.summary.guest.ipAddress }}</td>
+                            <td>{{ vm.vm_ob.vm_name }}</td>
+                            <td class="text-center">{{ vm.vm_ob.vm_ip }}</td>
 
-                        <td class="text-center">{{ vm.vm_ob.summary.quickStats.overallCpuUsage }}/{{ vm.vm_ob.summary.runtime.maxCpuUsage }}</td>
-                        <td class="text-center">{{ vm.vm_ob.summary.quickStats.guestMemoryUsage }}/{{ vm.vm_ob.summary.runtime.maxMemoryUsage }}</td>
+                        <td class="text-center">{{ vm.vm_ob.vm_cpu }}</td>
+                        <td class="text-center">{{ vm.vm_ob.vm_memory }}</td>
                         <td class="text-center">{{ vm.user }}</td>
                         <td class="text-center">
                                 <div class="btn-group">
@@ -63,7 +56,7 @@
                             </div>
                         </td>
                         <td class="text-center opt">
-                            {% if vm.vm_ob.summary.runtime.powerState|length > 9 %}
+                            {% if vm.vm_ob.vm_power == 0 %}
                                 <button type="button" class="btn btn-sm btn-success btn_poweron"><i class="icon-play"></i>打开</button>
                             {% else %}
                                 <button type="button" class="btn btn-sm btn-danger btn_poweroff"><i class="icon-off"></i>关机</button>
@@ -71,7 +64,6 @@
                             {% endif %}
                         </td>
                     </tr>
-                {% endif %}
             {% endfor %}
             </tbody>
             <tfoot>

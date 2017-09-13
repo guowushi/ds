@@ -33,8 +33,8 @@ urlpatterns = [
     url(r'^logout', vmm.login.logout),  # 退出
     url(r'^login/', vmm.login.login),
     url(r'^backend/power', vmm.admin.power),  # 电源管理
-
-
+    url(r'^userregist', vmm.login.userregist),  # 注册账号
+    url(r'^active_user/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$', vmm.login.active_user, name='active_user'),#邮件链接
 
     # -------------------------------
     url(r'^backend/index', vmm.admin.index),  # 首页
@@ -50,13 +50,11 @@ urlpatterns = [
     # -------------------------------
     url(r'^front/index', vmm.user.index),  # 首页
     url(r'^front/list', vmm.user.listvm),  #虚拟机列表
-    url(r'^front/createvm', vmm.user.createvm),  # 创建虚拟机
+    url(r'^front/createvm', vmm.user.createvm),  # 申请虚拟机
     url(r'^front/modify', vmm.user.modify),  # 修改个人基本信息
+    url(r'^dispose_vm/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$', vmm.login.active_user, name='dispose_vm'),#邮件链接
 
 
 
-    url(r'^userregist', vmm.login.userregist),
 
-
-    url(r'^active_user/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$',vmm.login.active_user,name='active_user')
 ]

@@ -129,7 +129,7 @@
                                 <div class="content">
                                     <h4>总数</h4>
                                     <hr>
-                                    <p>目前总数</p>
+                                    {% block num %}<p>目前总数</p>{% endblock %}
                                 </div>
                             </div>
                             <div class="alert with-icon">
@@ -137,7 +137,7 @@
                                 <div class="content">
                                     <h4>正在运行</h4>
                                     <hr>
-                                    <p>正在运行</p>
+                                    {% block running %}  <p>正在运行</p>{% endblock %}
                                 </div>
                             </div>
                             <div class="alert with-icon">

@@ -17,15 +17,54 @@
         <thead>
         <tr>
             <th width="40" class="text-center"><input type="checkbox" name="checkbox"></th>
-            <th width="50" class="text-center">系统</th>
-            <th width="140" class="text-center">CPU/MHz</th>
-            <th width="140" class="text-center">内存/MB</th>
-            <th width="150" class="text-center">申请人</th>
-            <th width="140" class="text-center">操作</th>
+             <th width="50" class="text-center">申请人</th>
+             <th width="100" class="text-center">虚拟机名字</th>
+            <th width="80" class="text-center">系统</th>
+            <th width="40" class="text-center">CPU/MHz</th>
+            <th width="40" class="text-center">内存/MB</th>
+             <th width="50" class="text-center">硬盘</th>
+             <th width="50" class="text-center">虚拟机类型</th>
+            <th width="100" class="text-center">操作</th>
         </tr>
         </thead>
         <tbody>
 
+
+        {% for vm in vms %}
+                        <tr id="r{{ forloop.counter }}">
+                            <td class="text-center">
+                                <input type="checkbox" name="checkbox" value="{{ vm.vm_ob.vm_uuid }}">
+                            </td>
+                            <td class="text-center">{{ vm.user }}</td>
+
+                            <td>{{ vm.vm_ob.vm_name }}</td>
+                            <td class="text-center">{{ vm.vm_ob.vm_os }}</td>
+
+                            <td class="text-center">{{ vm.vm_ob.vm_cpu }}</td>
+
+
+                        <td class="text-center">{{ vm.vm_ob.vm_memory }}</td>
+                        <td class="text-center">{{ vm.vm_ob.vm_disks }}</td>
+
+                        <td class="text-center">
+                                <div class="btn-group">
+                                    {% if vm.vm_ob.vm_type == 0 %}
+                                    系统管理
+                                    {% elif vm.vm_ob.vm_type == 1 %}
+                                    生产环境
+                                    {% else %}
+                                        实验环境
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="text-center opt">
+
+                                <button type="button" class="btn btn-sm btn-danger btn_poweroff"><i class="icon-off"></i>同意</button>
+                                <button type="button" class="btn btn-sm btn-danger btn_reboot"><i class="icon-refresh"></i>拒绝</button>
+
+                        </td>
+                    </tr>
+            {% endfor %}
 
         </tbody>
             <tfoot>

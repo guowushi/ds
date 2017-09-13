@@ -7,35 +7,13 @@ from django.template import loader
 from pyVim import connect
 from pyVim.connect import Disconnect
 from pyVmomi import vim
-
+from vmm.model.models import vms
+from vmm.model.token import Token
 from vmm.model.forms import vm_regist
-
-
+from django.conf import settings
+from vmm.model.models import users
 #-------------------------------------------------------------------------------------------------
 # 创建虚拟机
-def createvm(request):
-    user_id = request.session.get('user_id')
-    if request.session.get('user_id'):
-        if request.method == 'POST':  # 当提交表单时
-            vm_regist_info = vm_regist(request.POST)  # form 包含提交的数据
-            if vm_regist_info.is_valid():  # 如果提交的数据合法
-                print("输入数据合法！ ")
-                print(vm_regist_info.cleaned_data)
-            else:
-                print("输入数据不合法！")
-                print(vm_regist_info.cleaned_data)
-        else:  # 当正常访问时
-            vm_regist_info = vm_regist()
-        tp = loader.get_template("backend/createvm.html")
-        html = tp.render()
-        return HttpResponse(html)
-        # return render(request, 'vmm/templates/backend/createvm.html', {'form': vm_regist_info})
-    else:
-        return HttpResponse("你还未登录，点击<a href=\"/login/\">这里</a>登录!")
-
-        # 克隆虚拟机
-
-
 def wait_for_task(task):
     """ wait for a vCenter task to finish """
     task_done = False
@@ -76,7 +54,6 @@ def clone_vm(
     Clone a VM from a template/VM, datacenter_name, vm_folder, datastore_name
     cluster_name, resource_pool, and power_on are all optional.
     """
-
     # if none git the first one
     datacenter = get_obj(content, [vim.Datacenter], datacenter_name)
 
@@ -107,14 +84,13 @@ def clone_vm(
     clonespec = vim.vm.CloneSpec()
     clonespec.location = relospec
     clonespec.powerOn = power_on
-
-    print("cloning VM...")
     task = template.Clone(folder=destfolder, name=vm_name, spec=clonespec)
     wait_for_task(task)
 
 
-def creat(request):
-
+def creat(vm_regist_info):
+    os=vm_regist_info.cleaned_data["vm_os"]
+    name=vm_regist_info.cleaned_data["vm_name"]
     """
     Let this thing fly
     """
@@ -126,20 +102,91 @@ def creat(request):
         port=443)
     # disconnect this thing
     atexit.register(Disconnect, si)
+    content = si.RetrieveContent()
+    container = content.rootFolder  # 从哪查找
+    viewType = [vim.VirtualMachine]  # 查找的对象类型是什么
+    recursive = True  # 是否进行递归查找
+    containerView = content.viewManager.CreateContainerView(container, viewType, recursive)
+    vms_list = containerView.view  # 执行查找
+    # db_info_renew = vms.objects.get(user_id=input_id)
+
+
 
     content = si.RetrieveContent()
     template = None
 
-    template = get_obj(content, [vim.VirtualMachine], "WinXP")
+    template = get_obj(content, [vim.VirtualMachine], os)
 
     if template:
         clone_vm(
-            content, template, "xx", si,
-            "", "",
-            "", "",
-            "", 1)
-        return HttpResponse("完成")
+            content, template,name , si,
+            "Datacenter", "auto_regist",
+            "", "Server3,4,5",
+            "test", 0)
+
+        return True
     else:
-        return HttpResponse("template not found")
+        return False
+
+
+
 
 #------------------------------------------------------------------------------------------------------------
+
+
+
+#修改虚拟机配置
+def config(vm_regist_info):
+    """
+    Let this thing fly
+    """
+    # connect this thing
+    name = vm_regist_info.cleaned_data["vm_name"]
+    CPU = vm_regist_info.cleaned_data["vm_cpu"]
+    memory = vm_regist_info.cleaned_data["vm_memory"]
+    si = connect.SmartConnectNoSSL(
+        host="172.16.3.141",
+        user="administrator@vsphere.local",
+        pwd="Server@2012",
+        port=443)
+    # disconnect this thing
+    atexit.register(Disconnect, si)
+
+    content = si.RetrieveContent()
+    container = content.rootFolder
+    viewType = [vim.VirtualMachine]
+    recursive = True
+    containerView = content.viewManager.CreateContainerView(
+        container, viewType, recursive)
+    children = containerView.view
+    for vm in children:
+        if vm.name == name:
+            numCPUs = vim.vm.ConfigSpec()
+            numCPUs.numCPUs = CPU
+            numCPUs.numCoresPerSocket = CPU / 2
+            numCPUs.memoryMB = memory
+            vm.ReconfigVM_Task(numCPUs)
+            return True
+    return False
+
+
+
+token_confirm = Token(settings.SECRET_KEY)
+
+#申请处理页面
+def dispose_vm(request, token):
+
+    try:
+        vm_name = token_confirm.confirm_validate_token(token)
+    except:
+        return HttpResponse(u'对不起，验证链接已经过期')
+    try:
+        vm = vms.objects.get(vm_name=vm_name)
+    except users.DoesNotExist:
+        return HttpResponse(u'对不起，您所验证的用户不存在，请重新注册')
+    vm.vm_dispose = True
+    vm.vm_enabled=1
+    vm.save()
+    tp = loader.get_template("re_success.html")
+    html = tp.render()
+    return HttpResponse(html)

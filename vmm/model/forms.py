@@ -24,5 +24,6 @@ class vm_regist(forms.Form):
     vm_os = forms.CharField()
     vm_cpu = forms.IntegerField()
     vm_memory = forms.IntegerField()
-    vm_disk = forms.IntegerField()
+    vm_disks = forms.IntegerField()
     vm_purpose = forms.CharField()
+    vm_type=forms.IntegerField()

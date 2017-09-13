@@ -10,6 +10,7 @@ class Token():
 
     def generate_validate_token(self, username):
         serializer = utsr(self.security_key)
+
         return serializer.dumps(username, self.salt)
 
     def confirm_validate_token(self, token, expiration=3600):
