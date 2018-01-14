@@ -3,8 +3,8 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 {% endblock %}
 {% block page_js %}
-    <script type="text/javascript" src="/static/js/power.js"></script>
     <script type="text/javascript" src="/static/js/common.js"></script>
+    <script type="text/javascript" src="/static/js/disapp.js"></script>
 {% endblock %}
 {% block title %}申请虚拟机{% endblock %}
 
@@ -33,7 +33,7 @@
         {% for vm in vms %}
                         <tr id="r{{ forloop.counter }}">
                             <td class="text-center">
-                                <input type="checkbox" name="checkbox" value="{{ vm.vm_ob.vm_uuid }}">
+                                <input type="checkbox" name="checkbox" value="{{ vm.vm_ob.vm_id }}">
                             </td>
                             <td class="text-center">{{ vm.user }}</td>
 
@@ -59,8 +59,8 @@
                         </td>
                         <td class="text-center opt">
 
-                                <button type="button" class="btn btn-sm btn-danger btn_poweroff"><i class="icon-off"></i>同意</button>
-                                <button type="button" class="btn btn-sm btn-danger btn_reboot"><i class="icon-refresh"></i>拒绝</button>
+                                <button type="button" class="btn btn-sm btn-danger btn_agree"><i class="icon-off"></i>同意</button>
+                                <button type="button" class="btn btn-sm btn-danger btn_disagree"><i class="icon-refresh"></i>拒绝</button>
 
                         </td>
                     </tr>

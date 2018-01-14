@@ -9,7 +9,7 @@
 {% block title %}虚拟机云管理{% endblock %}
 
 
-{% block block_mnt_list %}<a style="color: #43a047" href="/backend/list">虚拟机</a>{% endblock %}
+{% block block_mnt_list %}<a style="color: #43a047" href="/backend/list">虚拟机列表</a>{% endblock %}
 
 
 {% block main %}
@@ -40,7 +40,7 @@
                             </td>
                             <td class="text-center">{{ vm.vm_ob.vm_os }}
                             </td>
-                            <td>{{ vm.vm_ob.vm_name }}</td>
+                            <td class="">{{ vm.vm_ob.vm_name }}</td>
                             <td class="text-center">{{ vm.vm_ob.vm_ip }}</td>
 
                         <td class="text-center">{{ vm.vm_ob.vm_cpu }}</td>

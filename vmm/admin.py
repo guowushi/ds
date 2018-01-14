@@ -112,20 +112,23 @@ def createvm(request):
                 if (db_vm_name) & db_vm_name.values_list("vm_enabled") == 1:
                     return HttpResponse("该名称已存在")
                 else:
-                    if creat(vm_regist_info)&config(vm_regist_info):
-                        a_vm_user_id = request.session.get('user_id')
-                        a_vm_name =vm_regist_info.cleaned_data["vm_name"]
-                        a_vm_purpose = vm_regist_info.cleaned_data["vm_purpose"]
-                        a_vm_os = vm_regist_info.cleaned_data["vm_os"]
-                        a_vm_cpu = vm_regist_info.cleaned_data["vm_cpu"]
-                        a_vm_disk = vm_regist_info.cleaned_data["vm_disks"]
-                        a_vm_type = vm_regist_info.cleaned_data["vm_type"]
-                        a_vm_memory = vm_regist_info.cleaned_data["vm_memory"]
-                        vms.objects.create(vm_user_id=a_vm_user_id,vm_name=a_vm_name,vm_purpose=a_vm_purpose,
-                                           vm_os=a_vm_os,vm_cpu=a_vm_cpu,vm_disks=a_vm_disk,vm_memory =a_vm_memory,vm_os_admin=1,vm_type=a_vm_type)
+
+                    a_vm_user_id = request.session.get('user_id')
+                    a_vm_name = vm_regist_info.cleaned_data["vm_name"]
+                    a_vm_purpose = vm_regist_info.cleaned_data["vm_purpose"]
+                    a_vm_os = vm_regist_info.cleaned_data["vm_os"]
+                    a_vm_cpu = vm_regist_info.cleaned_data["vm_cpu"]
+                    a_vm_disk = vm_regist_info.cleaned_data["vm_disks"]
+                    a_vm_type = vm_regist_info.cleaned_data["vm_type"]
+                    a_vm_memory = vm_regist_info.cleaned_data["vm_memory"]
+                    vm = vms.objects.create(vm_user_id=a_vm_user_id, vm_name=a_vm_name, vm_purpose=a_vm_purpose,
+                                            vm_os=a_vm_os, vm_cpu=a_vm_cpu, vm_disks=a_vm_disk, vm_memory=a_vm_memory,
+                                            vm_os_admin=1, vm_type=a_vm_type,vm_dispose=1)
+                    if creat(vm) & config(vm):
                         return HttpResponse("创建成功, 请返回虚拟机列表页面查看")
                     else:
-                        return HttpResponse("创建失败")
+                        return HttpResponse("创建失败,请联系管理员")
+                        # return HttpResponse(vm.vm_id)
             else:
                 return HttpResponse("输入错误")
         else:  # 当正常访问时
@@ -135,27 +138,44 @@ def createvm(request):
         return HttpResponse("你还未登录，点击<a href=\"/login/\">这里</a>登录!")
 
 
+# --------------------------------------------------------------------------------------------
 
 
-#--------------------------------------------------------------------------------------------
+# 申请管理页面
 def dispapp(request):
     if request.session.get('user_id'):
-        vm_infor = vms.objects.all()  # 获得vms表单信息
-        user_infor=users.objects.all()
-        vms_include = []  # 用于打包虚拟机列表及其使用者
-        for vm_sq in vm_infor:
-            if(vm_sq.vm_dispose==False):
-                vms_obj = vm_obj()
-                vms_obj.vm_ob = vm_sq
-                for user in user_infor:
-                    if (user.user_id == vm_sq.vm_user_id):
-                        vms_obj.user = user.real_name
-                        vms_obj.enabled = vm_sq.vm_enabled
-                        break
-                vms_include.append(vms_obj)
-        tp = loader.get_template("backend/disapp.html")
-        html = tp.render({ "vms": vms_include})
-        return HttpResponse(html)
+        if request.method == 'POST':
+            input_id = request.GET.get('id')
+            op_type = request.GET.get('type')
+            db_info_renew = vms.objects.get(vm_id=input_id)
+            db_info_renew.vm_dispose = True
+            db_info_renew.save()
+            if op_type == "1":
+                if creat(db_info_renew) & config(db_info_renew):
+
+                    print ("chenggong")
+                    return HttpResponse("创建成功, 请返回虚拟机列表页面查看")
+                else:
+                    return HttpResponse("创建失败")
+            else:
+                return HttpResponse("拒绝创建")
+        else:
+            vm_infor = vms.objects.all()  # 获得vms表单信息
+            user_infor = users.objects.all()
+            vms_include = []  # 用于打包虚拟机列表及其使用者
+            for vm_sq in vm_infor:
+                if (vm_sq.vm_dispose == False):
+                    vms_obj = vm_obj()
+                    vms_obj.vm_ob = vm_sq
+                    for user in user_infor:
+                        if (user.user_id == vm_sq.vm_user_id):
+                            vms_obj.user = user.real_name
+                            vms_obj.enabled = vm_sq.vm_enabled
+                            break
+                    vms_include.append(vms_obj)
+            tp = loader.get_template("backend/disapp.html")
+            html = tp.render({"vms": vms_include})
+            return HttpResponse(html)
     else:
         return HttpResponse("页面未找到")
 
@@ -172,7 +192,6 @@ def dispapp(request):
 def power(request):
     uuid = request.GET.get('uuid')
     op_type = request.GET.get('type')
-    print (op_type)
     try:
         si = connect.SmartConnectNoSSL(host="172.16.3.141",
                                        user="administrator@vsphere.local",
@@ -238,6 +257,7 @@ def profile(request):
 def modify(request):
     if request.method == 'POST':
         regist_info = user_regist(request.POST)
+        print ()
         if regist_info.is_valid():
             input_id = regist_info.cleaned_data["user_id"]
             db_user_id = users.objects.filter(user_id=input_id)
@@ -246,7 +266,6 @@ def modify(request):
                     db_info_renew = users.objects.get(user_id=input_id)
                     db_info_renew.user_id = regist_info.cleaned_data["user_id"]
                     db_info_renew.user_password = regist_info.cleaned_data["user_password1"]
-                    db_info_renew.real_name = regist_info.cleaned_data["real_name"]
                     db_info_renew.email = regist_info.cleaned_data["email"]
                     db_info_renew.mobile = regist_info.cleaned_data["mobile"]
                     db_info_renew.isadmin = False
@@ -264,3 +283,7 @@ def modify(request):
         tp = loader.get_template("backend/modify.html")
         html = tp.render()
         return HttpResponse(html)
+
+
+def dealapp(request):
+    pass

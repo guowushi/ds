@@ -88,9 +88,9 @@ def clone_vm(
     wait_for_task(task)
 
 
-def creat(vm_regist_info):
-    os=vm_regist_info.cleaned_data["vm_os"]
-    name=vm_regist_info.cleaned_data["vm_name"]
+def creat(vm):
+    os=vm.vm_os
+    name=vm.vm_name
     """
     Let this thing fly
     """
@@ -118,12 +118,12 @@ def creat(vm_regist_info):
     template = get_obj(content, [vim.VirtualMachine], os)
 
     if template:
-        clone_vm(
+        x=clone_vm(
             content, template,name , si,
             "Datacenter", "auto_regist",
             "", "Server3,4,5",
             "test", 0)
-
+        print (x)
         return True
     else:
         return False
@@ -136,14 +136,14 @@ def creat(vm_regist_info):
 
 
 #修改虚拟机配置
-def config(vm_regist_info):
+def config(vm):
     """
     Let this thing fly
     """
     # connect this thing
-    name = vm_regist_info.cleaned_data["vm_name"]
-    CPU = vm_regist_info.cleaned_data["vm_cpu"]
-    memory = vm_regist_info.cleaned_data["vm_memory"]
+    name = vm.vm_name
+    CPU = vm.vm_cpu
+    memory = vm.vm_memory
     si = connect.SmartConnectNoSSL(
         host="172.16.3.141",
         user="administrator@vsphere.local",
@@ -159,34 +159,23 @@ def config(vm_regist_info):
     containerView = content.viewManager.CreateContainerView(
         container, viewType, recursive)
     children = containerView.view
-    for vm in children:
-        if vm.name == name:
+    for vms in children:
+        if vms.name == name:
             numCPUs = vim.vm.ConfigSpec()
             numCPUs.numCPUs = CPU
             numCPUs.numCoresPerSocket = CPU / 2
             numCPUs.memoryMB = memory
-            vm.ReconfigVM_Task(numCPUs)
+            vms.ReconfigVM_Task(numCPUs)
+
+            action = si.content.searchIndex.FindByUuid(None, vms.summary.config.instanceUuid, True, True)
+
             return True
     return False
 
 
 
-token_confirm = Token(settings.SECRET_KEY)
 
-#申请处理页面
-def dispose_vm(request, token):
 
-    try:
-        vm_name = token_confirm.confirm_validate_token(token)
-    except:
-        return HttpResponse(u'对不起，验证链接已经过期')
-    try:
-        vm = vms.objects.get(vm_name=vm_name)
-    except users.DoesNotExist:
-        return HttpResponse(u'对不起，您所验证的用户不存在，请重新注册')
-    vm.vm_dispose = True
-    vm.vm_enabled=1
-    vm.save()
-    tp = loader.get_template("re_success.html")
-    html = tp.render()
-    return HttpResponse(html)
+
+
+

@@ -80,7 +80,7 @@
                                     Linux
                                 {% endif %}
                             </td>
-                            <td>{{ vm.vm_ob.summary.config.name }}</td>
+                            <td><a href="{{ vm.vm_url }}"> {{ vm.vm_ob.summary.config.name }}</a></td>
                             <td class="text-center">{{ vm.vm_ob.summary.guest.ipAddress }}</td>
 
                         <td class="text-center">{{ vm.vm_ob.summary.quickStats.overallCpuUsage }}/{{ vm.vm_ob.summary.runtime.maxCpuUsage }}</td>

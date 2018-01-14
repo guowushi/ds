@@ -2,7 +2,8 @@
 {% block page_css %}
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 {% endblock %}
-    {% block page_js %}<script type="text/javascript" src="/static/js/common.js"></script>{% endblock %}
+{% block page_js %}
+    <script type="text/javascript" src="/static/js/common.js"></script>{% endblock %}
 
 
 
@@ -24,14 +25,23 @@
                 {% for use in users %}
                     <tr id="r{{ forloop.counter }}">
                         <td class="text-center">
-                            <input type="checkbox" name="checkbox" value="{{ use}}">
+                            <input type="checkbox" name="checkbox" value="{{ use }}">
                         </td>
                         <td>{{ use.user.user_id }}</td>
-                        <td class="text-center">{{use.user.real_name }}</td>
+                        <td class="text-center">{{ use.user.real_name }}</td>
 
                         <td class="text-center">{{ use.vm_list | length }}</td>
-                        <td class="text-center">{{ use.user.user_id }}</td>
-
+                        {% if use.user.enabled %}
+                            <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-danger btn_poweron"><i class="icon-off"></i>禁用
+                                </button>
+                            </td>
+                        {% else %}
+                           <td class="text-center">
+                                <button type="button" class="btn btn-sm btn_poweron"><i class="icon-off"></i>启用
+                                </button>
+                            </td>
+                        {% endif %}
                     </tr>
 
                 {% endfor %}

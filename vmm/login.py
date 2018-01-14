@@ -33,6 +33,7 @@ token_confirm = Token(settings.SECRET_KEY)
 def verify_user_info(id, password):
     try:
         db_info = users.objects.filter(user_id=id)
+        enabled=db_info.values_list('enabled')[0][0]
         if db_info:
             db_password = str(db_info.values_list('user_password')[0][0])
             if db_password == base64.encodestring(password):

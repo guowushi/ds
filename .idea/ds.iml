@@ -19,7 +19,7 @@
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="D:/ds\templates" />
+        <option value="$MODULE_DIR$/vmm/templates" />
       </list>
     </option>
   </component>

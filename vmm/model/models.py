@@ -17,6 +17,7 @@ class users(models.Model):
     isadmin = models.BooleanField(default=False)
     comment = models.TextField(blank=True)
     isactive=models.BooleanField(default=False)
+    enabled=models.BooleanField(default=True)
 
     def __unicode__(self):  # 在Python3中使用 def __str__(self):
         return self.user_id  # 返回这张表的主键，用于区分数据库中的不同表
@@ -25,7 +26,7 @@ class users(models.Model):
 # 创建虚拟机信息表
 class vms(models.Model):
     vm_name = models.CharField(max_length=50)
-    vm_uuid = models.CharField(max_length=50, primary_key=True)
+    vm_uuid = models.CharField(max_length=50)
     vm_purpose = models.TextField()
     vm_comment = models.TextField()
     vm_os_admin = models.IntegerField()
@@ -42,6 +43,7 @@ class vms(models.Model):
     vm_enabled = models.IntegerField(default=1)
     vm_power = models.IntegerField(default=0)
     vm_dispose=models.BooleanField(default=False)
+    vm_id=models.AutoField(primary_key=True)
     def __unicode__(self):
         return self.vm_uuid
 
@@ -51,8 +53,9 @@ class vms(models.Model):
 自定义的类,用来存放相关数据
 '''
 class vm_obj(object):
-    def __int__(self, vm_ob, user, enabled, vm_list):
+    def __int__(self, vm_ob, user, enabled, vm_list,vm_url):
         self.vm_ob = vm_ob
         self.user = user
         self.enabled = enabled
         self.vm_list = vm_list
+        self.vm_url=vm_url

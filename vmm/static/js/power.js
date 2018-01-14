@@ -46,36 +46,4 @@ $(document).ready(function(){
             power(optype, uuid);
         }
     });
-    // $('.panel').on("click","tr,td,button",function (event) {
-    //     var tr_id = $(this).parents('tr').attr('id');
-    //     var uu_id = $(this).nextAll('.uuid').attr('value');
-    //     // console.log(123);
-    //     alert(uu_id);
-    //     var optype = '';
-    //     if ($(this).attr('id') == 'poweroff') {
-    //         optype = 0;
-    //         power(optype,uu_id,tr_id);
-    //     }else if($(this).attr('id') == 'powerre'){
-    //         optype = -1;
-    //         power(optype,uu_id,tr_id);
-    //     }else if($(this).attr('id') == 'poweron'){
-    //         optype = 1;
-    //         power(optype,uu_id,tr_id);
-    //     }
-    // });
-
-    // $('#poweron').click(function(){
-    //     if (confirm("确定要关机吗？")) {
-    //         $.ajax({
-    //             type: "GET",
-    //             url: "/power?uuid=" + uuid + "&type=" + '0',
-    //             success: function (msg) {
-    //                 if (msg == '0') {
-    //                     $("#id").load(thisurl + '#id');
-    //                     }
-    //                 }
-    //         });
-    //     }
-    // })
-
 });

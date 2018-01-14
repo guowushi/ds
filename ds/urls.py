@@ -46,13 +46,13 @@ urlpatterns = [
 
 
 
-
     # -------------------------------
     url(r'^front/index', vmm.user.index),  # 首页
     url(r'^front/list', vmm.user.listvm),  #虚拟机列表
     url(r'^front/createvm', vmm.user.createvm),  # 申请虚拟机
     url(r'^front/modify', vmm.user.modify),  # 修改个人基本信息
-    url(r'^dispose_vm/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$', vmm.login.active_user, name='dispose_vm'),#邮件链接
+
+    # url(r'^front/viwe', vmm.consoles.viewconsole)
 
 
 

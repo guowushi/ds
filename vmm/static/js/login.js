@@ -17,6 +17,7 @@ var userok = false;
 var passok = false;
 var captchaok = false;
 $('.denglu').click(function () {
+    console.log("denglu click");
     // 验证用户名密码和验证码是否为空！
     if ($('input[name="user_id"]').val() != "") {
         userok = true;
@@ -60,8 +61,9 @@ $('.denglu').click(function () {
 
     //提交按钮,所有验证通过方可提交
     if (userok && passok && captchaok) {
-        // console.log(form);
-        $(".dlfrom").ajaxSubmit({
+        console.log("submit....");
+
+        $(".dlform").ajaxSubmit({
             type: "POST",
             dataType: "json", //json格式，后台返回的数据为json格式的。
             success: function (result) {
@@ -92,21 +94,22 @@ $('.denglu').click(function () {
     }
 
 });
-    $('input[name="user_id"]').click(function () {
+// 当点击文本框时，
+$('input[name="user_id"]').click(function () {
         $(this).parent('.col-md-6').removeClass('has-warning');
         $(this).tooltip('destroy');
     });
-    $('input[name="user_password"]').click(function () {
+$('input[name="user_password"]').click(function () {
         $(this).parent('.col-md-6').removeClass('has-warning');
         $(this).tooltip('destroy');
     });
-    $('input[name="captcha_1"]').click(function () {
+ $('input[name="captcha_1"]').click(function () {
         $(this).parent('.col-md-6').removeClass('has-warning');
         $(this).tooltip('destroy');
-    });
+ });
 
 
-    // 注册框验证是否为空
+//-------------------------------------- 注册框验证是否为空------------------------------------------------------------
 $('.reg_bt').click(function () {
     var input_id = $("#reg_bd input");
     for(var i=0;i<input_id.length;i++){
